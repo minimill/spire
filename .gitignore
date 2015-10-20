@@ -1,6 +1,6 @@
-bin
-include
-lib
+/bin
+/include
+/lib
 .Python
 secrets.py
 .webassets-cache
