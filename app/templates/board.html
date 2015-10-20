@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros %}
+
+{% block js %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/lib/dropzone.js') }}"></script>
+<script src="{{ url_for('static', filename='js/board.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <form action="{{ url_for('save_board', board_slug=board.slug) }}"
+      method="POST"
+      id="board-form"
+      class="board-form">
+      {{ macros.render_field(forms.board.csrf_token) }}
+      {{ macros.render_field(forms.board.title, class="title") }}
+      {{ macros.render_field(forms.board.slug) }}
+    </form>
+    <form action="{{ url_for('add_text', board_slug=board.slug) }}"
+      method="POST"
+      id="text-form"
+      class="hidden text-form">
+      {{ macros.render_field(forms.text.csrf_token) }}
+      {{ macros.render_field(forms.text.text) }}
+      {{ macros.render_field(forms.text.slug) }}
+    </form>
+    <section>
+        {% for color in board.colors %}
+        <div class="color" style="background-color: #{{color.hex_rep}}">
+          <p>#{{ color.hex_rep }}</p>
+        </div>
+        {% endfor %}
+        {% for image in board.images %}
+        <img src="{{ image.s3_url }}">
+        {% endfor %}
+        <div class="dropzone-previews"></div>
+        <form action="https://swiftly-uploads.s3.amazonaws.com/" id="dropzone">
+          <input name="x-ignore-combo" id="combo" type="text" placeholder="Insert an image link / hex code or drag and drop a file">
+          <input name="key" type="hidden" value="uploads/{{ now }}.jpg">
+          <input name="acl" type="hidden" value="public-read">
+          <input name="policy" type="hidden" value="{{ aws.policy }}">
+          <input name="signature" type="hidden" value="{{ aws.signature }}">
+          <input name="content-type" type="hidden" value="application/octet-stream">
+          <input name="AWSAccessKeyId" type="hidden" value="{{ config.AWS_ACCESS_KEY_ID }}">
+        </form>
+    </section>
+</div>
+{% endblock %}

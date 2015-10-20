@@ -11,9 +11,11 @@
 
 	{% if label %}
 	{{ field.label }}
+	{% else %}
+	{% set placeholder = field.label.text %}
 	{% endif %}
 
-	{{ field(**kwargs) | safe }}
+	{{ field(placeholder=placeholder, **kwargs) | safe }}
 
 	{% if submit %}
 	<input type="submit" value="Go">

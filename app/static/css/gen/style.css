@@ -1,1211 +1,336 @@
-@media screen and (min-width: 1921px) {
-  html,
-  body {
-    font-size: 20px;
-  }
+ /* Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
+--------------------------------------------------------------------------------------- */
+/* line 3, /Users/dan/working/spire/app/static/scss/lib/reset.min.scss */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
 }
-@media screen and (max-width: 1920px) {
-  html,
-  body {
-    font-size: 18px;
-  }
+
+/* line 3, /Users/dan/working/spire/app/static/scss/lib/reset.min.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block;
 }
-@media screen and (max-width: 1440px) {
-  html,
-  body {
-    font-size: 16px;
-  }
+
+/* line 3, /Users/dan/working/spire/app/static/scss/lib/reset.min.scss */
+body {
+  line-height: 1;
 }
-@media screen and (max-width: 1024px) {
-  html,
-  body {
-    font-size: 15px;
-  }
+
+/* line 3, /Users/dan/working/spire/app/static/scss/lib/reset.min.scss */
+ol, ul {
+  list-style: none;
 }
-@media screen and (min-width: 641px) {
-  .mobile-only {
-    display: none;
-  }
+
+/* line 3, /Users/dan/working/spire/app/static/scss/lib/reset.min.scss */
+blockquote, q {
+  quotes: none;
 }
-@media screen and (max-width: 640px) {
-  html,
-  body {
-    font-size: 14px;
-  }
-  .hide-mobile {
-    display: none;
-  }
+
+/* line 3, /Users/dan/working/spire/app/static/scss/lib/reset.min.scss */
+blockquote:before, blockquote:after, q:before, q:after {
+  content: '';
+  content: none;
 }
-@media screen and (max-width: 480px) {
-  html,
-  body {
-    font-size: 12px;
-  }
+
+/* line 3, /Users/dan/working/spire/app/static/scss/lib/reset.min.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
 }
-@media screen and (max-width: 319px) {
-  html,
-  body {
-    font-size: 7px;
-  }
-}
-@media screen and (max-width: 240px) {
-  html,
-  body {
-    font-size: 5px;
-  }
-}
-.border-box {
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
+
 @font-face {
   font-family: 'Calibre';
-  src: url('../../font/CalibreWeb-Regular.eot');
-  src: url('../../font/CalibreWeb-Regular.eot?#iefix') format('embedded-opentype'), url('../../font/CalibreWeb-Regular.woff') format('woff');
-}
-body,
-html {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: 'Lato', 'Helvetica Neue', sans-serif;
-  font-size: 16px;
-}
-h1,
-.h1 {
   font-weight: 400;
-  font-size: 2rem;
-  line-height: 1.5;
-  margin: 0 0 3.875rem;
+  src: url("../../font/CalibreWeb-Regular.eot");
+  /* IE9 Compat Modes */
+  src: url("../../font/CalibreWeb-Regular.woff") format("woff");
+}
+/* line 18, /Users/dan/working/spire/app/static/scss/_typography.scss */
+body, html, h1, h2, h3, h4, h5, h6, p, li, input {
+  font-family: "Calibre", Helvetica, Arial, sans-serif;
+}
+
+/* line 22, /Users/dan/working/spire/app/static/scss/_typography.scss */
+h1 {
+  font-size: 2.25rem;
+  font-weight: 300;
+  margin-bottom: 2.5rem;
+}
+
+/* line 28, /Users/dan/working/spire/app/static/scss/_typography.scss */
+h2 {
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  line-height: 1;
   text-align: center;
-  color: #19517f;
+  text-transform: uppercase;
 }
-ul,
-ol {
-  margin: 0;
-  padding: 0;
+
+/* line 37, /Users/dan/working/spire/app/static/scss/_typography.scss */
+h3 {
+  font-size: 1.5rem;
 }
-@media screen and (max-width: 1024px) {
-  h1,
-  .h1 {
-    margin-bottom: 3rem;
+
+/* line 41, /Users/dan/working/spire/app/static/scss/_typography.scss */
+h4 {
+  font-size: 1.1rem;
+}
+
+/* line 45, /Users/dan/working/spire/app/static/scss/_typography.scss */
+h5 {
+  color: #cccccc;
+  font-size: .75rem;
+  text-transform: uppercase;
+}
+
+/* line 51, /Users/dan/working/spire/app/static/scss/_typography.scss */
+p, .p {
+  color: #cccccc;
+  font-size: .875rem;
+}
+
+@media screen and (max-width: 640px) {
+  /* line 57, /Users/dan/working/spire/app/static/scss/_typography.scss */
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  /* line 61, /Users/dan/working/spire/app/static/scss/_typography.scss */
+  h4 {
+    font-size: 1.5rem;
   }
 }
-@media screen and (max-width: 768px) {
-  h1,
-  .h1 {
-    margin-bottom: 3.875rem;
-  }
-}
-@media screen and (max-width: 1024px) {
-  h1,
-  .h1 {
-    margin-bottom: 2.25rem;
-  }
-}
-form {
-  width: 90%;
-  max-width: 30rem;
-  margin: 0 auto;
-  padding: 0 0 6.875rem;
-}
-input:not([type="submit"]) {
-  border: 1px solid #cccccc;
-  background-color: rgba(0, 0, 0, 0);
-  outline: none;
-  color: #999999;
-  display: block;
-  padding: 1rem;
-  font-size: 1rem;
-  line-height: 1.5rem;
-  vertical-align: top;
-  border-radius: 4px;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  width: 100%;
-}
-input:not([type="submit"])::-webkit-input-placeholder {
-  vertical-align: top;
-  color: #999999;
-  font-size: 1rem;
-  line-height: 1.5rem;
-}
-input:not([type="submit"]):-moz-placeholder {
-  /* Firefox 18- */
-  vertical-align: top;
-  color: #999999;
-  font-size: 1rem;
-  line-height: 1.5rem;
-}
-input:not([type="submit"])::-moz-placeholder {
-  /* Firefox 19+ */
-  vertical-align: top;
-  color: #999999;
-  font-size: 1rem;
-  line-height: 1.5rem;
-}
-input:not([type="submit"]):-ms-input-placeholder {
-  vertical-align: top;
-  color: #999999;
-  font-size: 1rem;
-  line-height: 1.5rem;
-}
-input[type="submit"] {
-  border: 0;
-  outline: 0;
-  background-color: rgba(0, 0, 0, 0);
-  font-size: 0;
-  height: 4rem;
-  padding: 1rem 1rem;
-  position: absolute;
-  background-image: url(../../img/icon-arrow.svg);
-  background-position: 1rem 1rem;
-  background-size: 2rem 2rem;
-  background-repeat: no-repeat;
-  top: 1.25rem;
-  right: 1.5rem;
-  width: 4rem;
-  cursor: pointer;
-}
-input[type="submit"]::-webkit-input-placeholder {
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-input[type="submit"]:-moz-placeholder {
-  /* Firefox 18- */
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-input[type="submit"]::-moz-placeholder {
-  /* Firefox 19+ */
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-input[type="submit"]:-ms-input-placeholder {
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-form .errors {
-  padding-top: 1.5rem;
-}
-form .errors li {
-  background-color: #ff3333;
-  display: block;
-  color: #ffffff;
-  font-family: 'Lato', 'Helvetica Neue', sans-serif;
-  padding: 1rem 1.5rem;
-  border-radius: 4px;
-}
-.form-control {
-  margin-bottom: 1rem;
-  position: relative;
-}
-.form-control.invalid input {
-  border-color: #ff3333;
-}
-.form-control.hidden {
+/* line 1, /Users/dan/working/spire/app/static/scss/_util.scss */
+.hidden {
   display: none;
 }
-.login-form {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  -o-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
-.login-form input:not([type="submit"]) {
-  font-size: 2rem;
-  line-height: 2.5rem;
-  padding: 2rem 7rem;
-  background-image: url(../../img/icon-lock.svg);
-  background-position: 2.5rem 2.125rem;
-  background-size: 2rem 2rem;
-  background-repeat: no-repeat;
-}
-.login-form input:not([type="submit"])::-webkit-input-placeholder {
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-.login-form input:not([type="submit"]):-moz-placeholder {
-  /* Firefox 18- */
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-.login-form input:not([type="submit"])::-moz-placeholder {
-  /* Firefox 19+ */
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-.login-form input:not([type="submit"]):-ms-input-placeholder {
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-@media screen and (max-width: 1024px) {
-  .login-form {
-    position: relative;
-    top: auto;
-    left: auto;
-    -webkit-transform: none;
-    -moz-transform: none;
-    -o-transform: none;
-    transform: none;
-  }
-  form {
-    padding: 3rem 0;
-  }
-}
-@media screen and (max-width: 768px) {
-  form {
-    padding: 9rem 0 3.875rem;
-  }
-}
-@media screen and (max-width: 640px) {
-  .login-form input:not([type="submit"]) {
-    font-size: 1.75rem;
-    line-height: 2.25rem;
-    padding: 1rem 4.25rem;
-    background-size: 1.25rem 1.25rem;
-    background-position: 1.5rem 1.5rem;
-  }
-  input[type="submit"] {
-    height: 2.75rem;
-    padding: 0.75rem;
-    width: 2.75rem;
-    top: 0.75rem;
-    right: 0.75rem;
-    background-position: 0.75rem 0.75rem;
-    background-size: 1.25rem 1.25rem;
-  }
-  form {
-    padding: 3.875rem 0;
-  }
-}
-@font-face {
-  font-family: 'Calibre';
-  src: url('../../font/CalibreWeb-Regular.eot');
-  src: url('../../font/CalibreWeb-Regular.eot?#iefix') format('embedded-opentype'), url('../../font/CalibreWeb-Regular.woff') format('woff');
-}
-body,
-html {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: 'Lato', 'Helvetica Neue', sans-serif;
+
+/* line 1, /Users/dan/working/spire/app/static/scss/_base.scss */
+html, body {
+  background-color: #FFFFFF;
+  color: #222222;
+  font-family: "Calibre", Helvetica, Arial, sans-serif;
   font-size: 16px;
-}
-h1,
-.h1 {
-  font-weight: 400;
-  font-size: 2rem;
+  font-weight: 300;
+  height: 100%;
   line-height: 1.5;
-  margin: 0 0 3.875rem;
-  text-align: center;
-  color: #19517f;
-}
-ul,
-ol {
-  margin: 0;
-  padding: 0;
-}
-@media screen and (max-width: 1024px) {
-  h1,
-  .h1 {
-    margin-bottom: 3rem;
-  }
-}
-@media screen and (max-width: 768px) {
-  h1,
-  .h1 {
-    margin-bottom: 3.875rem;
-  }
-}
-@media screen and (max-width: 1024px) {
-  h1,
-  .h1 {
-    margin-bottom: 2.25rem;
-  }
-}
-
-
-@media screen and (min-width: 1921px) {
-  html,
-  body {
-    font-size: 20px;
-  }
-}
-@media screen and (max-width: 1920px) {
-  html,
-  body {
-    font-size: 18px;
-  }
-}
-@media screen and (max-width: 1440px) {
-  html,
-  body {
-    font-size: 16px;
-  }
-}
-@media screen and (max-width: 1024px) {
-  html,
-  body {
-    font-size: 15px;
-  }
-}
-@media screen and (min-width: 641px) {
-  .mobile-only {
-    display: none;
-  }
-}
-@media screen and (max-width: 640px) {
-  html,
-  body {
-    font-size: 14px;
-  }
-  .hide-mobile {
-    display: none;
-  }
-}
-@media screen and (max-width: 480px) {
-  html,
-  body {
-    font-size: 12px;
-  }
-}
-@media screen and (max-width: 319px) {
-  html,
-  body {
-    font-size: 7px;
-  }
-}
-@media screen and (max-width: 240px) {
-  html,
-  body {
-    font-size: 5px;
-  }
-}
-.border-box {
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
-form {
-  width: 90%;
-  max-width: 30rem;
-  margin: 0 auto;
-  padding: 0 0 6.875rem;
-}
-input:not([type="submit"]) {
-  border: 1px solid #cccccc;
-  background-color: rgba(0, 0, 0, 0);
-  outline: none;
-  color: #999999;
-  display: block;
-  padding: 1rem;
-  font-size: 1rem;
-  line-height: 1.5rem;
-  vertical-align: top;
-  border-radius: 4px;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  width: 100%;
-}
-input:not([type="submit"])::-webkit-input-placeholder {
-  vertical-align: top;
-  color: #999999;
-  font-size: 1rem;
-  line-height: 1.5rem;
-}
-input:not([type="submit"]):-moz-placeholder {
-  /* Firefox 18- */
-  vertical-align: top;
-  color: #999999;
-  font-size: 1rem;
-  line-height: 1.5rem;
-}
-input:not([type="submit"])::-moz-placeholder {
-  /* Firefox 19+ */
-  vertical-align: top;
-  color: #999999;
-  font-size: 1rem;
-  line-height: 1.5rem;
-}
-input:not([type="submit"]):-ms-input-placeholder {
-  vertical-align: top;
-  color: #999999;
-  font-size: 1rem;
-  line-height: 1.5rem;
-}
-input[type="submit"] {
-  border: 0;
-  outline: 0;
-  background-color: rgba(0, 0, 0, 0);
-  font-size: 0;
-  height: 4rem;
-  padding: 1rem 1rem;
-  position: absolute;
-  background-image: url(../../img/icon-arrow.svg);
-  background-position: 1rem 1rem;
-  background-size: 2rem 2rem;
-  background-repeat: no-repeat;
-  top: 1.25rem;
-  right: 1.5rem;
-  width: 4rem;
-  cursor: pointer;
-}
-input[type="submit"]::-webkit-input-placeholder {
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-input[type="submit"]:-moz-placeholder {
-  /* Firefox 18- */
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-input[type="submit"]::-moz-placeholder {
-  /* Firefox 19+ */
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-input[type="submit"]:-ms-input-placeholder {
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-form .errors {
-  padding-top: 1.5rem;
-}
-form .errors li {
-  background-color: #ff3333;
-  display: block;
-  color: #ffffff;
-  font-family: 'Lato', 'Helvetica Neue', sans-serif;
-  padding: 1rem 1.5rem;
-  border-radius: 4px;
-}
-.form-control {
-  margin-bottom: 1rem;
   position: relative;
 }
-.form-control.invalid input {
-  border-color: #ff3333;
-}
-.form-control.hidden {
-  display: none;
-}
-.login-form {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  -o-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
-.login-form input:not([type="submit"]) {
-  font-size: 2rem;
-  line-height: 2.5rem;
-  padding: 2rem 7rem;
-  background-image: url(../../img/icon-lock.svg);
-  background-position: 2.5rem 2.125rem;
-  background-size: 2rem 2rem;
-  background-repeat: no-repeat;
-}
-.login-form input:not([type="submit"])::-webkit-input-placeholder {
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-.login-form input:not([type="submit"]):-moz-placeholder {
-  /* Firefox 18- */
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-.login-form input:not([type="submit"])::-moz-placeholder {
-  /* Firefox 19+ */
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-.login-form input:not([type="submit"]):-ms-input-placeholder {
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-@media screen and (max-width: 1024px) {
-  .login-form {
-    position: relative;
-    top: auto;
-    left: auto;
-    -webkit-transform: none;
-    -moz-transform: none;
-    -o-transform: none;
-    transform: none;
-  }
-  form {
-    padding: 3rem 0;
-  }
-}
-@media screen and (max-width: 768px) {
-  form {
-    padding: 9rem 0 3.875rem;
-  }
-}
-@media screen and (max-width: 640px) {
-  .login-form input:not([type="submit"]) {
-    font-size: 1.75rem;
-    line-height: 2.25rem;
-    padding: 1rem 4.25rem;
-    background-size: 1.25rem 1.25rem;
-    background-position: 1.5rem 1.5rem;
-  }
-  input[type="submit"] {
-    height: 2.75rem;
-    padding: 0.75rem;
-    width: 2.75rem;
-    top: 0.75rem;
-    right: 0.75rem;
-    background-position: 0.75rem 0.75rem;
-    background-size: 1.25rem 1.25rem;
-  }
-  form {
-    padding: 3.875rem 0;
-  }
-}
-@font-face {
-  font-family: 'Calibre';
-  src: url('../../font/CalibreWeb-Regular.eot');
-  src: url('../../font/CalibreWeb-Regular.eot?#iefix') format('embedded-opentype'), url('../../font/CalibreWeb-Regular.woff') format('woff');
-}
-body,
-html {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: 'Lato', 'Helvetica Neue', sans-serif;
-  font-size: 16px;
-}
-h1,
-.h1 {
-  font-weight: 400;
-  font-size: 2rem;
-  line-height: 1.5;
-  margin: 0 0 3.875rem;
-  text-align: center;
-  color: #19517f;
-}
-ul,
-ol {
-  margin: 0;
-  padding: 0;
-}
-@media screen and (max-width: 1024px) {
-  h1,
-  .h1 {
-    margin-bottom: 3rem;
-  }
-}
-@media screen and (max-width: 768px) {
-  h1,
-  .h1 {
-    margin-bottom: 3.875rem;
-  }
-}
-@media screen and (max-width: 1024px) {
-  h1,
-  .h1 {
-    margin-bottom: 2.25rem;
-  }
-}
-form {
-  width: 90%;
-  max-width: 30rem;
-  margin: 0 auto;
-  padding: 0 0 6.875rem;
-}
-input:not([type="submit"]) {
-  border: 1px solid #cccccc;
-  background-color: rgba(0, 0, 0, 0);
-  outline: none;
-  color: #999999;
-  display: block;
-  padding: 1rem;
-  font-size: 1rem;
-  line-height: 1.5rem;
-  vertical-align: top;
-  border-radius: 4px;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  width: 100%;
-}
-input:not([type="submit"])::-webkit-input-placeholder {
-  vertical-align: top;
-  color: #999999;
-  font-size: 1rem;
-  line-height: 1.5rem;
-}
-input:not([type="submit"]):-moz-placeholder {
-  /* Firefox 18- */
-  vertical-align: top;
-  color: #999999;
-  font-size: 1rem;
-  line-height: 1.5rem;
-}
-input:not([type="submit"])::-moz-placeholder {
-  /* Firefox 19+ */
-  vertical-align: top;
-  color: #999999;
-  font-size: 1rem;
-  line-height: 1.5rem;
-}
-input:not([type="submit"]):-ms-input-placeholder {
-  vertical-align: top;
-  color: #999999;
-  font-size: 1rem;
-  line-height: 1.5rem;
-}
-input[type="submit"] {
-  border: 0;
-  outline: 0;
-  background-color: rgba(0, 0, 0, 0);
-  font-size: 0;
-  height: 4rem;
-  padding: 1rem 1rem;
-  position: absolute;
-  background-image: url(../../img/icon-arrow.svg);
-  background-position: 1rem 1rem;
-  background-size: 2rem 2rem;
-  background-repeat: no-repeat;
-  top: 1.25rem;
-  right: 1.5rem;
-  width: 4rem;
-  cursor: pointer;
-}
-input[type="submit"]::-webkit-input-placeholder {
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-input[type="submit"]:-moz-placeholder {
-  /* Firefox 18- */
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-input[type="submit"]::-moz-placeholder {
-  /* Firefox 19+ */
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-input[type="submit"]:-ms-input-placeholder {
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-form .errors {
-  padding-top: 1.5rem;
-}
-form .errors li {
-  background-color: #ff3333;
-  display: block;
-  color: #ffffff;
-  font-family: 'Lato', 'Helvetica Neue', sans-serif;
-  padding: 1rem 1.5rem;
-  border-radius: 4px;
-}
-.form-control {
-  margin-bottom: 1rem;
-  position: relative;
-}
-.form-control.invalid input {
-  border-color: #ff3333;
-}
-.form-control.hidden {
-  display: none;
-}
-.login-form {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  -o-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
-.login-form input:not([type="submit"]) {
-  font-size: 2rem;
-  line-height: 2.5rem;
-  padding: 2rem 7rem;
-  background-image: url(../../img/icon-lock.svg);
-  background-position: 2.5rem 2.125rem;
-  background-size: 2rem 2rem;
-  background-repeat: no-repeat;
-}
-.login-form input:not([type="submit"])::-webkit-input-placeholder {
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-.login-form input:not([type="submit"]):-moz-placeholder {
-  /* Firefox 18- */
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-.login-form input:not([type="submit"])::-moz-placeholder {
-  /* Firefox 19+ */
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-.login-form input:not([type="submit"]):-ms-input-placeholder {
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-@media screen and (max-width: 1024px) {
-  .login-form {
-    position: relative;
-    top: auto;
-    left: auto;
-    -webkit-transform: none;
-    -moz-transform: none;
-    -o-transform: none;
-    transform: none;
-  }
-  form {
-    padding: 3rem 0;
-  }
-}
-@media screen and (max-width: 768px) {
-  form {
-    padding: 9rem 0 3.875rem;
-  }
-}
-@media screen and (max-width: 640px) {
-  .login-form input:not([type="submit"]) {
-    font-size: 1.75rem;
-    line-height: 2.25rem;
-    padding: 1rem 4.25rem;
-    background-size: 1.25rem 1.25rem;
-    background-position: 1.5rem 1.5rem;
-  }
-  input[type="submit"] {
-    height: 2.75rem;
-    padding: 0.75rem;
-    width: 2.75rem;
-    top: 0.75rem;
-    right: 0.75rem;
-    background-position: 0.75rem 0.75rem;
-    background-size: 1.25rem 1.25rem;
-  }
-  form {
-    padding: 3.875rem 0;
-  }
+
+/* line 12, /Users/dan/working/spire/app/static/scss/_base.scss */
+a, a:hover {
+  color: inherit;
+  text-decoration: none;
 }
 
-
-@media screen and (min-width: 1921px) {
-  html,
-  body {
-    font-size: 20px;
-  }
-}
-@media screen and (max-width: 1920px) {
-  html,
-  body {
-    font-size: 18px;
-  }
-}
-@media screen and (max-width: 1440px) {
-  html,
-  body {
-    font-size: 16px;
-  }
-}
-@media screen and (max-width: 1024px) {
-  html,
-  body {
-    font-size: 15px;
-  }
-}
-@media screen and (min-width: 641px) {
-  .mobile-only {
-    display: none;
-  }
-}
-@media screen and (max-width: 640px) {
-  html,
-  body {
-    font-size: 14px;
-  }
-  .hide-mobile {
-    display: none;
-  }
-}
-@media screen and (max-width: 480px) {
-  html,
-  body {
-    font-size: 12px;
-  }
-}
-@media screen and (max-width: 319px) {
-  html,
-  body {
-    font-size: 7px;
-  }
-}
-@media screen and (max-width: 240px) {
-  html,
-  body {
-    font-size: 5px;
-  }
-}
-
-@media screen and (min-width: 1921px) {
-  html,
-  body {
-    font-size: 20px;
-  }
-}
-@media screen and (max-width: 1920px) {
-  html,
-  body {
-    font-size: 18px;
-  }
-}
-@media screen and (max-width: 1440px) {
-  html,
-  body {
-    font-size: 16px;
-  }
-}
-@media screen and (max-width: 1024px) {
-  html,
-  body {
-    font-size: 15px;
-  }
-}
-@media screen and (min-width: 641px) {
-  .mobile-only {
-    display: none;
-  }
-}
-@media screen and (max-width: 640px) {
-  html,
-  body {
-    font-size: 14px;
-  }
-  .hide-mobile {
-    display: none;
-  }
-}
-@media screen and (max-width: 480px) {
-  html,
-  body {
-    font-size: 12px;
-  }
-}
-@media screen and (max-width: 319px) {
-  html,
-  body {
-    font-size: 7px;
-  }
-}
-@media screen and (max-width: 240px) {
-  html,
-  body {
-    font-size: 5px;
-  }
-}
-.border-box {
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
-form {
-  width: 90%;
-  max-width: 30rem;
-  margin: 0 auto;
-  padding: 0 0 6.875rem;
-}
-input:not([type="submit"]) {
-  border: 1px solid #cccccc;
-  background-color: rgba(0, 0, 0, 0);
-  outline: none;
-  color: #999999;
-  display: block;
-  padding: 1rem;
-  font-size: 1rem;
-  line-height: 1.5rem;
-  vertical-align: top;
-  border-radius: 4px;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  width: 100%;
-}
-input:not([type="submit"])::-webkit-input-placeholder {
-  vertical-align: top;
-  color: #999999;
-  font-size: 1rem;
-  line-height: 1.5rem;
-}
-input:not([type="submit"]):-moz-placeholder {
-  /* Firefox 18- */
-  vertical-align: top;
-  color: #999999;
-  font-size: 1rem;
-  line-height: 1.5rem;
-}
-input:not([type="submit"])::-moz-placeholder {
-  /* Firefox 19+ */
-  vertical-align: top;
-  color: #999999;
-  font-size: 1rem;
-  line-height: 1.5rem;
-}
-input:not([type="submit"]):-ms-input-placeholder {
-  vertical-align: top;
-  color: #999999;
-  font-size: 1rem;
-  line-height: 1.5rem;
-}
-input[type="submit"] {
-  border: 0;
-  outline: 0;
-  background-color: rgba(0, 0, 0, 0);
-  font-size: 0;
-  height: 4rem;
-  padding: 1rem 1rem;
-  position: absolute;
-  background-image: url(../../img/icon-arrow.svg);
-  background-position: 1rem 1rem;
-  background-size: 2rem 2rem;
-  background-repeat: no-repeat;
-  top: 1.25rem;
-  right: 1.5rem;
-  width: 4rem;
-  cursor: pointer;
-}
-input[type="submit"]::-webkit-input-placeholder {
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-input[type="submit"]:-moz-placeholder {
-  /* Firefox 18- */
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-input[type="submit"]::-moz-placeholder {
-  /* Firefox 19+ */
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-input[type="submit"]:-ms-input-placeholder {
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-form .errors {
-  padding-top: 1.5rem;
-}
-form .errors li {
-  background-color: #ff3333;
-  display: block;
-  color: #ffffff;
-  font-family: 'Lato', 'Helvetica Neue', sans-serif;
-  padding: 1rem 1.5rem;
-  border-radius: 4px;
-}
-.form-control {
-  margin-bottom: 1rem;
-  position: relative;
-}
-.form-control.invalid input {
-  border-color: #ff3333;
-}
-.form-control.hidden {
-  display: none;
-}
-.login-form {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  -o-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
-.login-form input:not([type="submit"]) {
-  font-size: 2rem;
-  line-height: 2.5rem;
-  padding: 2rem 7rem;
-  background-image: url(../../img/icon-lock.svg);
-  background-position: 2.5rem 2.125rem;
-  background-size: 2rem 2rem;
-  background-repeat: no-repeat;
-}
-.login-form input:not([type="submit"])::-webkit-input-placeholder {
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-.login-form input:not([type="submit"]):-moz-placeholder {
-  /* Firefox 18- */
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-.login-form input:not([type="submit"])::-moz-placeholder {
-  /* Firefox 19+ */
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-.login-form input:not([type="submit"]):-ms-input-placeholder {
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 2.5rem;
-}
-@media screen and (max-width: 1024px) {
-  .login-form {
-    position: relative;
-    top: auto;
-    left: auto;
-    -webkit-transform: none;
-    -moz-transform: none;
-    -o-transform: none;
-    transform: none;
-  }
-  form {
-    padding: 3rem 0;
-  }
-}
-@media screen and (max-width: 768px) {
-  form {
-    padding: 9rem 0 3.875rem;
-  }
-}
-@media screen and (max-width: 640px) {
-  .login-form input:not([type="submit"]) {
-    font-size: 1.75rem;
-    line-height: 2.25rem;
-    padding: 1rem 4.25rem;
-    background-size: 1.25rem 1.25rem;
-    background-position: 1.5rem 1.5rem;
-  }
-  input[type="submit"] {
-    height: 2.75rem;
-    padding: 0.75rem;
-    width: 2.75rem;
-    top: 0.75rem;
-    right: 0.75rem;
-    background-position: 0.75rem 0.75rem;
-    background-size: 1.25rem 1.25rem;
-  }
-  form {
-    padding: 3.875rem 0;
-  }
-}
-@font-face {
-  font-family: 'Calibre';
-  src: url('../../font/CalibreWeb-Regular.eot');
-  src: url('../../font/CalibreWeb-Regular.eot?#iefix') format('embedded-opentype'), url('../../font/CalibreWeb-Regular.woff') format('woff');
-}
-body,
-html {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: 'Lato', 'Helvetica Neue', sans-serif;
-  font-size: 16px;
-}
-h1,
-.h1 {
-  font-weight: 400;
-  font-size: 2rem;
-  line-height: 1.5;
-  margin: 0 0 3.875rem;
-  text-align: center;
-  color: #19517f;
-}
-ul,
-ol {
-  margin: 0;
-  padding: 0;
-}
-@media screen and (max-width: 1024px) {
-  h1,
-  .h1 {
-    margin-bottom: 3rem;
-  }
-}
-@media screen and (max-width: 768px) {
-  h1,
-  .h1 {
-    margin-bottom: 3.875rem;
-  }
-}
-@media screen and (max-width: 1024px) {
-  h1,
-  .h1 {
-    margin-bottom: 2.25rem;
-  }
-}
-.logo {
-  display: block;
-  height: 44px;
+/* line 17, /Users/dan/working/spire/app/static/scss/_base.scss */
+img {
   max-width: 100%;
-  position: fixed;
-  bottom: 7.5rem;
-  left: 50%;
-  -webkit-transform: translateX(-50%);
-  -moz-transform: translateX(-50%);
-  -o-transform: translateX(-50%);
-  transform: translateX(-50%);
-}
-.logo > svg {
-  height: 44px;
-  left: 0;
-}
-.logo > svg rect,
-.logo > svg polygon {
-  fill: #cccccc;
-}
-@media screen and (max-width: 640px) {
-  .logo {
-    position: relative;
-    bottom: auto;
-    padding: 3rem 0;
-    marign: 0 auto;
-    text-align: center;
-    height: 33px;
-  }
-  .logo > svg {
-    height: 33px;
-  }
 }
 
-.border-box {
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
+/* line 3, /Users/dan/working/spire/app/static/scss/_layout.scss */
+.content {
+  margin: 0 auto;
+  max-width: 57.5rem;
+  padding: 5rem .625rem;
+  width: 90%;
+}
+/* line 22, /Users/dan/working/spire/app/static/scss/_base.scss */
+.content:after {
+  clear: both;
+  content: ' ';
+  display: block;
+}
+
+@media screen and (max-width: 640px) {
+  /* line 12, /Users/dan/working/spire/app/static/scss/_layout.scss */
+  .content {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+@media screen and (min-width: 1921px) {
+  /* line 2, /Users/dan/working/spire/app/static/scss/_responsive.scss */
+  html, body {
+    font-size: 20px;
+  }
+}
+@media screen and (max-width: 1920px) {
+  /* line 8, /Users/dan/working/spire/app/static/scss/_responsive.scss */
+  html, body {
+    font-size: 18px;
+  }
+}
+@media screen and (max-width: 1440px) {
+  /* line 14, /Users/dan/working/spire/app/static/scss/_responsive.scss */
+  html, body {
+    font-size: 16px;
+  }
+}
+@media screen and (max-width: 1024px) {
+  /* line 20, /Users/dan/working/spire/app/static/scss/_responsive.scss */
+  html, body {
+    font-size: 15px;
+  }
+}
+@media screen and (min-width: 641px) {
+  /* line 26, /Users/dan/working/spire/app/static/scss/_responsive.scss */
+  .mobile-only {
+    display: none;
+  }
+}
+@media screen and (max-width: 640px) {
+  /* line 32, /Users/dan/working/spire/app/static/scss/_responsive.scss */
+  html, body {
+    font-size: 14px;
+  }
+
+  /* line 36, /Users/dan/working/spire/app/static/scss/_responsive.scss */
+  .hide-mobile {
+    display: none;
+  }
+}
+@media screen and (max-width: 480px) {
+  /* line 41, /Users/dan/working/spire/app/static/scss/_responsive.scss */
+  html, body {
+    font-size: 12px;
+  }
+}
+@media screen and (max-width: 319px) {
+  /* line 46, /Users/dan/working/spire/app/static/scss/_responsive.scss */
+  html, body {
+    font-size: 7px;
+  }
+}
+@media screen and (max-width: 240px) {
+  /* line 51, /Users/dan/working/spire/app/static/scss/_responsive.scss */
+  html, body {
+    font-size: 5px;
+  }
+}
+/* line 2, /Users/dan/working/spire/app/static/scss/_forms.scss */
+form.board-form {
+  margin: 0 auto;
+  max-width: 27.5rem;
+  width: 100%;
+}
+
+/* line 9, /Users/dan/working/spire/app/static/scss/_forms.scss */
+input:not([type="submit"]) {
+  border: 0;
+  border: 1px solid #f2f2f2;
+  font-size: 1.5rem;
+  line-height: 1.75rem;
+  margin-bottom: 1rem;
+  outline: none;
+  padding: 1.5rem 0;
+  text-align: center;
+  width: 100%;
+}
+/* line 20, /Users/dan/working/spire/app/static/scss/_forms.scss */
+input:not([type="submit"]).title {
+  font-size: 3rem;
+  line-height: 3.5rem;
+  padding: 1rem 0;
+}
+
+/* line 4, /Users/dan/working/spire/app/static/scss/_drop.scss */
+section {
+  border-bottom: 2px solid #cccccc;
+  border-top: 2px solid #cccccc;
+  padding: 2.5rem 0;
+  position: relative;
+  margin-top: 5rem;
+}
+/* line 11, /Users/dan/working/spire/app/static/scss/_drop.scss */
+section:before {
+  background-color: #FFFFFF;
+  border-color: transparent #cccccc #cccccc transparent;
+  border-style: solid;
+  border-width: 2px;
+  content: ' ';
+  display: block;
+  height: 28.28px;
+  left: 50%;
+  position: absolute;
+  top: 0;
+  transform: translate(-50%, -50%) rotate(-135deg);
+  width: 28.28px;
+  z-index: 1;
+}
+/* line 27, /Users/dan/working/spire/app/static/scss/_drop.scss */
+section:after {
+  background-color: #cccccc;
+  content: ' ';
+  display: block;
+  height: 4rem;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -100%);
+  top: -20px;
+  width: 2px;
+}
+
+/* line 40, /Users/dan/working/spire/app/static/scss/_drop.scss */
+#dropzone {
+  width: 100%;
+}
+
+/* line 44, /Users/dan/working/spire/app/static/scss/_drop.scss */
+.dz-preview {
+  display: block;
+  padding-bottom: 2.5rem;
+}
+/* line 48, /Users/dan/working/spire/app/static/scss/_drop.scss */
+.dz-preview .dz-image img {
+  display: block;
+  width: 100%;
+}
+/* line 53, /Users/dan/working/spire/app/static/scss/_drop.scss */
+.dz-preview .dz-success-mark, .dz-preview .dz-error-mark, .dz-preview .dz-details {
+  display: none;
+}
+/* line 57, /Users/dan/working/spire/app/static/scss/_drop.scss */
+.dz-preview .dz-progress {
+  display: none;
+  height: 10rem;
+  position: relative;
+  width: 100%;
+}
+/* line 63, /Users/dan/working/spire/app/static/scss/_drop.scss */
+.dz-preview .dz-progress .dz-upload {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #f2f2f2;
+  display: block;
+  height: 10rem;
+  transition: .2s ease width;
+}
+/* line 75, /Users/dan/working/spire/app/static/scss/_drop.scss */
+.dz-preview.dz-complete .dz-progress {
+  display: none;
+}
+
+/* line 1, /Users/dan/working/spire/app/static/scss/_board.scss */
+.color {
+  height: 11.25rem;
+  position: relative;
+  margin-bottom: 2.5rem;
+  display: inline-block;
+  width: 50%;
+  float: left;
+}
+/* line 9, /Users/dan/working/spire/app/static/scss/_board.scss */
+.color p {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  width: 100%;
 }

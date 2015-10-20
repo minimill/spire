@@ -1,0 +1,64 @@
+// Font weights
+$extra-bold: 800;
+$bold: 700;
+$medium: 500;
+$regular: 400;
+$light: 300;
+
+// Fonts
+@font-face {
+  font-family: 'Calibre';
+  font-weight: $regular;
+  src: url('../../font/CalibreWeb-Regular.eot'); /* IE9 Compat Modes */
+  src: url('../../font/CalibreWeb-Regular.woff') format('woff');
+}
+
+$sans: 'Calibre', Helvetica, Arial, sans-serif;
+
+body, html, h1, h2, h3, h4, h5, h6, p, li, input {
+  font-family: $sans;
+}
+
+h1, %h1 {
+  font-size: 2.25rem;
+  font-weight: $light;
+  margin-bottom: 2.5rem;
+}
+
+h2, %h2 {
+  font-size: 1rem;
+  font-weight: $medium;
+  letter-spacing: 2px;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+h3, %h3 {
+  font-size: 1.5rem;
+}
+
+h4, %h4 {
+  font-size: 1.1rem;
+}
+
+h5, %h5 {
+  color: $gray;
+  font-size: .75rem;
+  text-transform: uppercase;
+}
+
+p, .p {
+  color: $gray;
+  font-size: .875rem;
+}
+
+@media screen and (max-width: $phone-landscape-max) {
+  h1, %h1 {
+    font-size: 1.75rem;
+  }
+
+  h4, %h4 {
+    font-size: 1.5rem;
+  }
+}

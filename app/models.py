@@ -1,26 +1,19 @@
 import random
 import string
 from app import app, db
-from flask.ext.login import UserMixin, AnonymousUserMixin
-
-authentications = db.Table(
-    'authentications',
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
-    db.Column('project_id', db.Integer, db.ForeignKey('project.id'))
-)
 
 
-class Project(db.Model):
+class Board(db.Model):
+    __tablename__ = 'board'
     id = db.Column(db.Integer, primary_key=True)
     slug = db.Column(db.String(80), unique=True)
-    name = db.Column(db.String(80))
-    path = db.Column(db.String(80))
-    password_hash = db.Column(db.String(80))
+    title = db.Column(db.String(80))
+    images = db.relationship('Image', backref='board')
+    websites = db.relationship('Website', backref='board')
+    colors = db.relationship('Color', backref='board')
 
-    def __init__(self, name, path, password_hash, slug=None):
-        self.name = name
-        self.path = path
-        self.password_hash = password_hash
+    def __init__(self, title='', slug=None):
+        self.title = title
         self.slug = slug if slug is not None else self._generate_slug()
 
     def _generate_slug(self, length=8):
@@ -33,18 +26,32 @@ class Project(db.Model):
         return app.config['STATIC_FOLDER_PATH'] + self.path
 
 
-class User(db.Model, UserMixin):
+class Image(db.Model):
+    __tablename__ = 'image'
     id = db.Column(db.Integer, primary_key=True)
-    projects = db.relationship('Project',
-                               secondary=authentications,
-                               backref=db.backref('users', lazy='dynamic'))
-    current_project = db.relationship("Project",
-                                      foreign_keys="User.current_project_id")
-    current_project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
+    s3_url = db.Column(db.String(160))
+    board_id = db.Column(db.Integer, db.ForeignKey('board.id'))
 
-    def __repr__(self):
-        return '<User %r>' % self.id
+    def __init__(self, s3_url):
+        self.s3_url = s3_url
 
 
-class AnonymousUser(AnonymousUserMixin):
-    current_project = None
+class Color(db.Model):
+    __tablename__ = 'color'
+    id = db.Column(db.Integer, primary_key=True)
+    hex_rep = db.Column(db.String(8))
+    board_id = db.Column(db.Integer, db.ForeignKey('board.id'))
+
+
+class Website(db.Model):
+    __tablename__ = 'website'
+    id = db.Column(db.Integer, primary_key=True)
+    url = db.Column(db.String(160))
+    title = db.Column(db.String(80))
+    image = db.relationship('Image', backref=db.backref('website',
+                                                        uselist=False))
+    image_id = db.Column(db.Integer, db.ForeignKey('image.id'))
+    board_id = db.Column(db.Integer, db.ForeignKey('board.id'))
+
+    def __init__(self, url):
+        self.url = url

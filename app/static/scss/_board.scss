@@ -1,0 +1,16 @@
+.color {
+    height: 11.25rem;
+    position: relative;
+    margin-bottom: 2.5rem;
+    display: inline-block;
+    width: 50%;
+    float: left;
+
+    p {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        text-align: center;
+        width: 100%;
+    }
+}
