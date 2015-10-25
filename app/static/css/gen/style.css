@@ -231,8 +231,9 @@ input:not([type="submit"]) {
   padding: 1.5rem 0;
   text-align: center;
   width: 100%;
+  transition: 0.2s ease border;
 }
-/* line 20, /Users/dan/working/spire/app/static/scss/_forms.scss */
+/* line 21, /Users/dan/working/spire/app/static/scss/_forms.scss */
 input:not([type="submit"]).title {
   font-size: 3rem;
   line-height: 3.5rem;
@@ -333,4 +334,55 @@ section:after {
   transform: translateY(-50%);
   text-align: center;
   width: 100%;
+}
+
+/* line 18, /Users/dan/working/spire/app/static/scss/_board.scss */
+.image {
+  display: block;
+  margin-bottom: 2.5rem;
+}
+
+/* line 23, /Users/dan/working/spire/app/static/scss/_board.scss */
+#board-form input {
+  border: 1px solid transparent;
+}
+/* line 26, /Users/dan/working/spire/app/static/scss/_board.scss */
+#board-form input:invalid, #board-form input:hover, #board-form input:focus {
+  border: 1px solid #f2f2f2;
+}
+
+/* line 31, /Users/dan/working/spire/app/static/scss/_board.scss */
+#board-slug:before {
+  display: block;
+  content: "spire.minimill.co/";
+  position: absolute;
+  width: 100px;
+  height: 10px;
+}
+
+/* line 39, /Users/dan/working/spire/app/static/scss/_board.scss */
+#combo {
+  margin: 2.5rem 0;
+}
+
+/* line 1, /Users/dan/working/spire/app/static/scss/_footer.scss */
+footer {
+  padding: 2.5rem 0;
+  text-align: center;
+  font-size: 1rem;
+  height: 1.25rem;
+  line-height: 1.25rem;
+  color: #cccccc;
+}
+/* line 8, /Users/dan/working/spire/app/static/scss/_footer.scss */
+footer img {
+  display: inline-block;
+  margin-right: .5rem;
+  vertical-align: middle;
+  width: 1.25rem;
+}
+/* line 15, /Users/dan/working/spire/app/static/scss/_footer.scss */
+footer span {
+  display: inline-block;
+  vertical-align: middle;
 }

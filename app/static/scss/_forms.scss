@@ -16,6 +16,7 @@ input:not([type="submit"]) {
     padding: 1.5rem 0;
     text-align: center;
     width: 100%;
+    transition: 0.2s ease border;
 
     &.title {
         font-size: 3rem;

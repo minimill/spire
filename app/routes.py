@@ -1,7 +1,8 @@
-from flask import render_template, abort, redirect, url_for, jsonify
+from flask import render_template, abort, redirect, url_for
 from app.lib.aws import new_aws_formdata
-from app.models import Board, Color
-from app.forms import get_forms, EditBoardForm, TextForm
+from app.lib.json_response import json_success, json_error_message
+from app.models import Board, Color, Image
+from app.forms import get_forms, EditBoardForm, TextForm, ImageForm
 
 
 def register_routes(app, db):
@@ -38,12 +39,13 @@ def register_routes(app, db):
             board.title = board_form.title.data
             board.slug = board_form.slug.data
             db.session.commit()
-            return jsonify({
+            return json_success({
                 'slug': board.slug,
-                'success': True,
+                'title': board.title,
             })
-        print "error: ", board_form.errors
-        abort(400)
+
+        return json_error_message('Failed to save board',
+                                  error_data=board_form.errors)
 
     @app.route('/<board_slug>/text/', methods=['POST'])
     def add_text(board_slug):
@@ -58,11 +60,29 @@ def register_routes(app, db):
             db.session.add(color)
             board.colors.append(color)
             db.session.commit()
-            return jsonify({
-                'success': True
+            return json_success({
+                'hex': color.hex
             })
 
-        print form.errors
-        return jsonify({
-            'success': False
-        })
+        return json_error_message('Failed to create color',
+                                  error_data=form.errors)
+
+    @app.route('/<board_slug>/image/', methods=['POST'])
+    def add_image(board_slug):
+        print 'add_image: ', board_slug
+        board = Board.query.filter_by(slug=board_slug).first()
+        if not board:
+            abort(404)
+
+        form = ImageForm()
+        if form.validate_on_submit():
+            image = Image(filename=form.filename.data)
+            db.session.add(image)
+            board.images.append(image)
+            db.session.commit()
+            return json_success({
+                'filename': image.filename
+            })
+
+        return json_error_message('Failed to create image',
+                                  error_data=form.errors)

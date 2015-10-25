@@ -7,17 +7,17 @@ try:
     AWS_ACCESS_KEY_ID = secrets.AWS_ACCESS_KEY_ID
     AWS_SECRET_ACCESS_KEY = secrets.AWS_SECRET_ACCESS_KEY
     SECRET_KEY = secrets.SECRET_KEY
-    META_TITLE = 'Cerberus: secure static hosting made by Minimill.'
+    META_TITLE = 'Spire'
     META_DESCRIPTION = (
-        'Cerberus: secure static hosting made by Minimill.'
+        'Spire: a fast and easy inspiration board.'
     )
-    META_NAME = 'Cerberus'
+    META_NAME = 'Spire'
     META_TWITTER_HANDLE = '@minimill_co'
-    META_DOMAIN = 'work.minimill.co'
-    META_URL = 'http://' + META_DOMAIN
+    META_DOMAIN = 'spire.fyi'
+    META_URL = 'https://' + META_DOMAIN
     META_IMAGE = 'img/lock.svg'
     SQLALCHEMY_DATABASE_URI = 'sqlite:///test.db'
-    STATIC_FOLDER_PATH = '/srv/work/private_html/'
+    S3_BASEURL = 'https://s3.amazonaws.com/minimill-spire/'
 
 except ImportError:
     print >> stderr, 'Could not find config/secrets.py.  Do you have one?'

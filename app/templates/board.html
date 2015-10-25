@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% import "macros.html" as macros %}
+{% block title %}{{ board.title }} - {{ super() }}{% endblock %}
 
 {% block js %}
 {{ super() }}
@@ -14,8 +15,8 @@
       id="board-form"
       class="board-form">
       {{ macros.render_field(forms.board.csrf_token) }}
-      {{ macros.render_field(forms.board.title, class="title") }}
-      {{ macros.render_field(forms.board.slug) }}
+      {{ macros.render_field(forms.board.title, class="title", required=True) }}
+      {{ macros.render_field(forms.board.slug, required=True) }}
     </form>
     <form action="{{ url_for('add_text', board_slug=board.slug) }}"
       method="POST"
@@ -25,6 +26,14 @@
       {{ macros.render_field(forms.text.text) }}
       {{ macros.render_field(forms.text.slug) }}
     </form>
+    <form action="{{ url_for('add_image', board_slug=board.slug) }}"
+      method="POST"
+      id="image-form"
+      class="hidden image-form">
+      {{ macros.render_field(forms.image.csrf_token) }}
+      {{ macros.render_field(forms.image.filename) }}
+      {{ macros.render_field(forms.image.slug) }}
+    </form>
     <section>
         {% for color in board.colors %}
         <div class="color" style="background-color: #{{color.hex_rep}}">
@@ -32,12 +41,14 @@
         </div>
         {% endfor %}
         {% for image in board.images %}
-        <img src="{{ image.s3_url }}">
+        <div class="image">
+          <img src="{{ image.url }}">
+        </div>
         {% endfor %}
         <div class="dropzone-previews"></div>
         <form action="https://swiftly-uploads.s3.amazonaws.com/" id="dropzone">
           <input name="x-ignore-combo" id="combo" type="text" placeholder="Insert an image link / hex code or drag and drop a file">
-          <input name="key" type="hidden" value="uploads/{{ now }}.jpg">
+          <!-- <input name="key" type="hidden" value=""> -->
           <input name="acl" type="hidden" value="public-read">
           <input name="policy" type="hidden" value="{{ aws.policy }}">
           <input name="signature" type="hidden" value="{{ aws.signature }}">
@@ -45,5 +56,8 @@
           <input name="AWSAccessKeyId" type="hidden" value="{{ config.AWS_ACCESS_KEY_ID }}">
         </form>
     </section>
+    <footer>
+      <img src="{{ url_for('static', filename='img/spire-logo.svg') }}"> <span>Spire by <a href="https://minimill.co">Minimill</a></span>
+    </footer>
 </div>
 {% endblock %}

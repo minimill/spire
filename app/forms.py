@@ -36,19 +36,38 @@ def valid_hex(form, field):
         raise ValidationError(INVALID_HEX)
 
 
-class EditBoardForm(Form):
+class SpireForm(Form):
+
+    def __init__(self, *args, **kwargs):
+        super(SpireForm, self).__init__(prefix=self._prefix, *args, **kwargs)
+
+    @property
+    def _prefix(self):
+        raise NotImplemented
+
+
+class EditBoardForm(SpireForm):
+    _prefix = 'board-'
     title = StringField('Project Name')
     slug = StringField('project-name', [DataRequired()])
 
 
-class TextForm(Form):
+class TextForm(SpireForm):
+    _prefix = 'text-'
     slug = StringField('slug', [DataRequired(), valid_slug])
     text = StringField('text', [DataRequired(), valid_hex])
+
+
+class ImageForm(SpireForm):
+    _prefix = 'image-'
+    slug = StringField('slug', [DataRequired(), valid_slug])
+    filename = StringField('filename', [DataRequired()])
 
 
 def get_forms(board):
     return {
         'board': EditBoardForm(title=board.title,
                                slug=board.slug),
-        'text': TextForm(slug=board.slug)
+        'text': TextForm(slug=board.slug),
+        'image': ImageForm(slug=board.slug)
     }

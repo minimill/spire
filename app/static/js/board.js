@@ -29,6 +29,44 @@ document.addEventListener('DOMContentLoaded', function() {
     xhr.send(params);
   }
 
+  function getFilename(file) {
+    var timestamp = new Date().toISOString();
+    var extention;
+    switch (file.type) {
+      case 'image/png':
+        extention = '.png';
+        break;
+      case 'image/jpeg':
+        extention = '.jpg';
+        break;
+      case 'image/gif':
+        extention = '.gif';
+        break;
+      case 'image/bmp':
+        extention = '.bmp';
+        break;
+      default:
+        console.log('unknown file type: ', file.type);
+        extention = '.unknown';
+        break;
+    }
+    return 'uploads/' + timestamp + extention;
+  }
+
+  // Forms
+  var textForm = document.getElementById('text-form');
+  var imageForm = document.getElementById('image-form');
+
+  // Inputs
+  var comboInput = document.getElementById('combo');
+  var filenameInput = document.getElementById('image-filename');
+  var textInput = document.getElementById('board-text');
+
+  // Slugs
+  var boardSlug = document.getElementById('board-slug');
+  var imageSlug = document.getElementById('image-slug');
+  var textSlug = document.getElementById('text-slug');
+
   var myDropzone = new Dropzone('#dropzone', {
     url: 'http://minimill-spire.s3.amazonaws.com',
     thumbnailWidth: null,
@@ -37,19 +75,31 @@ document.addEventListener('DOMContentLoaded', function() {
     previewsContainer: '.dropzone-previews',
     clickable: false,
     init: function() {
-      this.on('success', function(file, response) {
-        console.log(file, response)
+      this.on('sending', function(file, xhr, formData){
+        var filename = getFilename(file);
+        file.previewElement.dataset.s3Filename = filename;
+        formData.append('key', filename);
       });
     },
     success: function(file, response) {
-      console.log(file, response);
+      filenameInput.value = file.previewElement.dataset.s3Filename;
+      submitFormAjax(imageForm, function() {
+        var response = JSON.parse(this.response);
+        console.log(response);
+      });
     },
   });
 
+  function updateSlugs(slug) {
+    boardSlug.value = slug;
+    imageSlug.value = slug;
+    textSlug.value = slug;
+    boardForm.action = slug;
+    textForm.action = slug + '/text';
+    imageForm.action = slug + '/image';
+  }
 
-  var textForm = document.getElementById('text-form');
-  var textInput = document.getElementById('text');
-  var comboInput = document.getElementById('combo');
+
   document.getElementById('dropzone').addEventListener('submit', function(e) {
     e.preventDefault();
     textInput.value = comboInput.value;
@@ -64,13 +114,14 @@ document.addEventListener('DOMContentLoaded', function() {
   function saveBoard() {
     submitFormAjax(boardForm, function() {
       var response = JSON.parse(this.response);
-      if (response.slug) {
-        window.history.pushState({}, '', response.slug);
-        boardForm.action = response.slug;
-        textForm.action = response.slug;
-        document.querySelectorAll('#board-form #slug').value = response.slug;
+      console.log(response);
+      if (response.data.slug) {
+        var title = response.data.title + ' - Spire';
+        window.history.pushState({}, title, response.data.slug);
+        document.title = title;
+        updateSlugs(response.data.slug);
       }
-    })
+    });
   }
 
   var boardInputs = boardForm.getElementsByTagName('input');

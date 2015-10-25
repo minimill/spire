@@ -14,3 +14,28 @@
         width: 100%;
     }
 }
+
+.image {
+    display: block;
+    margin-bottom: 2.5rem;
+}
+
+#board-form input {
+    border: 1px solid $transparent;
+
+    &:invalid, &:hover, &:focus {
+        border: 1px solid $light-gray;
+    }
+}
+
+#board-slug:before {
+    display: block;
+    content: "spire.minimill.co/";
+    position: absolute;
+    width: 100px;
+    height: 10px;
+}
+
+#combo {
+    margin: 2.5rem 0;
+}

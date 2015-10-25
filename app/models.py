@@ -29,11 +29,15 @@ class Board(db.Model):
 class Image(db.Model):
     __tablename__ = 'image'
     id = db.Column(db.Integer, primary_key=True)
-    s3_url = db.Column(db.String(160))
+    filename = db.Column(db.String(160))
     board_id = db.Column(db.Integer, db.ForeignKey('board.id'))
 
-    def __init__(self, s3_url):
-        self.s3_url = s3_url
+    def __init__(self, filename):
+        self.filename = filename
+
+    @property
+    def url(self):
+        return app.config['S3_BASEURL'] + self.filename
 
 
 class Color(db.Model):
