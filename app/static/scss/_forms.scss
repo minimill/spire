@@ -9,6 +9,7 @@ form {
 input:not([type="submit"]) {
     border: 0;
     border: 1px solid $light-gray;
+    color: $black;
     font-size: 1.5rem;
     line-height: 1.75rem;
     margin-bottom: 1rem;

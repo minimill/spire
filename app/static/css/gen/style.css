@@ -224,6 +224,7 @@ form.board-form {
 input:not([type="submit"]) {
   border: 0;
   border: 1px solid #f2f2f2;
+  color: #222222;
   font-size: 1.5rem;
   line-height: 1.75rem;
   margin-bottom: 1rem;
@@ -233,11 +234,11 @@ input:not([type="submit"]) {
   width: 100%;
   transition: 0.2s ease border;
 }
-/* line 21, /Users/dan/working/spire/app/static/scss/_forms.scss */
+/* line 22, /Users/dan/working/spire/app/static/scss/_forms.scss */
 input:not([type="submit"]):focus {
   border-color: #cccccc;
 }
-/* line 25, /Users/dan/working/spire/app/static/scss/_forms.scss */
+/* line 26, /Users/dan/working/spire/app/static/scss/_forms.scss */
 input:not([type="submit"]).title {
   font-size: 3rem;
   line-height: 3.5rem;

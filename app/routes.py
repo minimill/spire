@@ -1,4 +1,6 @@
-from flask import render_template, abort, redirect, url_for
+import os
+from flask import (render_template, abort, redirect, url_for,
+                   send_from_directory)
 from app.lib.aws import new_aws_formdata
 from app.lib.json_response import json_success, json_error_message
 from app.models import Board, Color, Image
@@ -10,6 +12,12 @@ def register_routes(app, db):
     @app.errorhandler(404)
     def handle_404(e):
         return "404", 404
+
+    @app.route('/favicon.ico', methods=['GET'])
+    def favicon():
+        return send_from_directory(os.path.join(app.root_path, 'static'),
+                                   'favicon.ico',
+                                   mimetype='image/vnd.microsoft.icon')
 
     @app.route('/')
     def new():

@@ -23,11 +23,25 @@
     <meta property="og:url" content="{{ config.META_URL + request.path }}" />
     <meta property="og:image" content="{{ url_for('static', filename=config.META_IMAGE) }}" />
     <meta property="og:description" content="{{ self.description() }}" />
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon-64.png') }}" sizes="64x64" />
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon-32.png') }}" sizes="32x32" />
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon-16.png') }}" sizes="16x16" />
-    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon">
-    <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ url_for('static', filename='img/favicon/favicon-57x57.png') }}" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ url_for('static', filename='img/favicon/favicon-114x114.png') }}" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ url_for('static', filename='img/favicon/favicon-72x72.png') }}" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ url_for('static', filename='img/favicon/favicon-144x144.png') }}" />
+    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="{{ url_for('static', filename='img/favicon/favicon-60x60.png') }}" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="{{ url_for('static', filename='img/favicon/favicon-120x120.png') }}" />
+    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="{{ url_for('static', filename='img/favicon/favicon-76x76.png') }}" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="{{ url_for('static', filename='img/favicon/favicon-152x152.png') }}" />
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon/favicon-196x196.png') }}" sizes="196x196" />
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon/favicon-96x96.png') }}" sizes="96x96" />
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon/favicon-32x32.png') }}" sizes="32x32" />
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon/favicon-16x16.png') }}" sizes="16x16" />
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon/favicon-128.png') }}" sizes="128x128" />
+    <meta name="application-name" content="{{ self.title() }}"/>
+    <meta name="msapplication-TileColor" content="#FFFFFF" />
+    <meta name="msapplication-TileImage" content="{{ url_for('static', filename='img/favicon/favicon-144x144.png') }}" />
+    <meta name="msapplication-square70x70logo" content="{{ url_for('static', filename='img/favicon/favicon-70x70.png') }}" />
+    <meta name="msapplication-square150x150logo" content="{{ url_for('static', filename='img/favicon/favicon-150x150.png') }}" />
+    <meta name="msapplication-square310x310logo" content="{{ url_for('static', filename='img/favicon/favicon-310x310.png') }}" />
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/reset.css') }}">
     {%- assets 'scss_all' -%}
     <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}">
