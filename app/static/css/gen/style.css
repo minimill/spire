@@ -327,7 +327,7 @@ section:after {
 .color {
   height: 11.25rem;
   position: relative;
-  margin-bottom: 2.5rem;
+  margin-top: 2.5rem;
   display: inline-block;
   width: 50%;
   float: left;
@@ -344,7 +344,7 @@ section:after {
 /* line 18, /Users/dan/working/spire/app/static/scss/_board.scss */
 .image {
   display: block;
-  margin-bottom: 2.5rem;
+  margin-top: 2.5rem;
 }
 /* line 22, /Users/dan/working/spire/app/static/scss/_board.scss */
 .image img {

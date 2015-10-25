@@ -35,6 +35,15 @@
       {{ macros.render_field(forms.image.slug) }}
     </form>
     <section>
+        <form action="https://swiftly-uploads.s3.amazonaws.com/" id="dropzone">
+          <input name="x-ignore-combo" id="combo" type="text" placeholder="Insert an image link / hex code or drag and drop a file">
+          <!-- <input name="key" type="hidden" value=""> -->
+          <input name="acl" type="hidden" value="public-read">
+          <input name="policy" type="hidden" value="{{ aws.policy }}">
+          <input name="signature" type="hidden" value="{{ aws.signature }}">
+          <input name="content-type" type="hidden" value="application/octet-stream">
+          <input name="AWSAccessKeyId" type="hidden" value="{{ config.AWS_ACCESS_KEY_ID }}">
+        </form>
         {% for color in board.colors %}
         <div class="color" style="background-color: #{{color.hex_rep}}">
           <p>#{{ color.hex_rep }}</p>
@@ -46,15 +55,6 @@
         </div>
         {% endfor %}
         <div class="dropzone-previews"></div>
-        <form action="https://swiftly-uploads.s3.amazonaws.com/" id="dropzone">
-          <input name="x-ignore-combo" id="combo" type="text" placeholder="Insert an image link / hex code or drag and drop a file">
-          <!-- <input name="key" type="hidden" value=""> -->
-          <input name="acl" type="hidden" value="public-read">
-          <input name="policy" type="hidden" value="{{ aws.policy }}">
-          <input name="signature" type="hidden" value="{{ aws.signature }}">
-          <input name="content-type" type="hidden" value="application/octet-stream">
-          <input name="AWSAccessKeyId" type="hidden" value="{{ config.AWS_ACCESS_KEY_ID }}">
-        </form>
     </section>
     <footer>
       <a href="{{ url_for('new') }}"><img src="{{ url_for('static', filename='img/spire-logo.svg') }}"></a> <span><a href="{{ url_for('new') }}">Spire</a> by <a href="https://minimill.co">Minimill</a></span>
