@@ -234,6 +234,10 @@ input:not([type="submit"]) {
   transition: 0.2s ease border;
 }
 /* line 21, /Users/dan/working/spire/app/static/scss/_forms.scss */
+input:not([type="submit"]):focus {
+  border-color: #cccccc;
+}
+/* line 25, /Users/dan/working/spire/app/static/scss/_forms.scss */
 input:not([type="submit"]).title {
   font-size: 3rem;
   line-height: 3.5rem;
@@ -279,7 +283,7 @@ section:after {
 
 /* line 40, /Users/dan/working/spire/app/static/scss/_drop.scss */
 #dropzone {
-  width: 100%;
+  padding: 0 5rem;
 }
 
 /* line 44, /Users/dan/working/spire/app/static/scss/_drop.scss */
@@ -344,14 +348,18 @@ section:after {
 
 /* line 23, /Users/dan/working/spire/app/static/scss/_board.scss */
 #board-form input {
-  border: 1px solid transparent;
+  border-color: transparent;
 }
 /* line 26, /Users/dan/working/spire/app/static/scss/_board.scss */
-#board-form input:invalid, #board-form input:hover, #board-form input:focus {
-  border: 1px solid #f2f2f2;
+#board-form input:invalid, #board-form input:hover {
+  border-color: #f2f2f2;
+}
+/* line 30, /Users/dan/working/spire/app/static/scss/_board.scss */
+#board-form input:focus {
+  border-color: #cccccc;
 }
 
-/* line 31, /Users/dan/working/spire/app/static/scss/_board.scss */
+/* line 35, /Users/dan/working/spire/app/static/scss/_board.scss */
 #board-slug:before {
   display: block;
   content: "spire.minimill.co/";
@@ -360,7 +368,7 @@ section:after {
   height: 10px;
 }
 
-/* line 39, /Users/dan/working/spire/app/static/scss/_board.scss */
+/* line 43, /Users/dan/working/spire/app/static/scss/_board.scss */
 #combo {
   margin: 2.5rem 0;
 }

@@ -95,8 +95,8 @@ document.addEventListener('DOMContentLoaded', function() {
     imageSlug.value = slug;
     textSlug.value = slug;
     boardForm.action = slug;
-    textForm.action = slug + '/text';
-    imageForm.action = slug + '/image';
+    textForm.action = slug + '/text/';
+    imageForm.action = slug + '/image/';
   }
 
 

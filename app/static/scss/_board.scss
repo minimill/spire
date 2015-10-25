@@ -21,10 +21,14 @@
 }
 
 #board-form input {
-    border: 1px solid $transparent;
+    border-color: $transparent;
 
-    &:invalid, &:hover, &:focus {
-        border: 1px solid $light-gray;
+    &:invalid, &:hover {
+        border-color: $light-gray;
+    }
+
+    &:focus {
+        border-color: $gray;
     }
 }
 
