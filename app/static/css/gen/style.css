@@ -345,21 +345,25 @@ section:after {
   display: block;
   margin-bottom: 2.5rem;
 }
+/* line 22, /Users/dan/working/spire/app/static/scss/_board.scss */
+.image img {
+  width: 100%;
+}
 
-/* line 23, /Users/dan/working/spire/app/static/scss/_board.scss */
+/* line 27, /Users/dan/working/spire/app/static/scss/_board.scss */
 #board-form input {
   border-color: transparent;
 }
-/* line 26, /Users/dan/working/spire/app/static/scss/_board.scss */
+/* line 30, /Users/dan/working/spire/app/static/scss/_board.scss */
 #board-form input:invalid, #board-form input:hover {
   border-color: #f2f2f2;
 }
-/* line 30, /Users/dan/working/spire/app/static/scss/_board.scss */
+/* line 34, /Users/dan/working/spire/app/static/scss/_board.scss */
 #board-form input:focus {
   border-color: #cccccc;
 }
 
-/* line 35, /Users/dan/working/spire/app/static/scss/_board.scss */
+/* line 39, /Users/dan/working/spire/app/static/scss/_board.scss */
 #board-slug:before {
   display: block;
   content: "spire.minimill.co/";
@@ -368,7 +372,7 @@ section:after {
   height: 10px;
 }
 
-/* line 43, /Users/dan/working/spire/app/static/scss/_board.scss */
+/* line 47, /Users/dan/working/spire/app/static/scss/_board.scss */
 #combo {
   margin: 2.5rem 0;
 }
