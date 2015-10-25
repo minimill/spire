@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var textSlug = document.getElementById('text-slug');
 
   var myDropzone = new Dropzone('#dropzone', {
-    url: 'http://minimill-spire.s3.amazonaws.com',
+    url: 'https://minimill-spire.s3.amazonaws.com',
     thumbnailWidth: null,
     thumbnailHeight: null,
     maxThumbnailFilesize: 15,
