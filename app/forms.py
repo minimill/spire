@@ -69,9 +69,10 @@ class EditBoardForm(SpireForm):
 
 
 class TextForm(SpireForm):
+    _placeholder = 'Insert an image link / hex code or drag and drop a file'
     _prefix = 'text-'
     slug = StringField('slug', [DataRequired(), ValidSlug()])
-    text = StringField('text', [DataRequired()])
+    text = StringField(_placeholder, [DataRequired()])
 
 
 class ImageForm(SpireForm):

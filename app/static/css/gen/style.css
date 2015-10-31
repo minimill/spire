@@ -283,7 +283,7 @@ section:after {
 }
 
 /* line 40, /Users/dan/working/spire/app/static/scss/_drop.scss */
-#dropzone {
+#text-form {
   padding: 0 5rem;
 }
 
@@ -388,6 +388,30 @@ section:after {
   display: block;
   content: ' ';
   clear: both;
+}
+
+/* line 57, /Users/dan/working/spire/app/static/scss/_board.scss */
+#dropzone {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: visibility 175ms, opacity 175ms;
+  visibility: hidden;
+  opacity: 0;
+}
+/* line 69, /Users/dan/working/spire/app/static/scss/_board.scss */
+#dropzone.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* line 75, /Users/dan/working/spire/app/static/scss/_board.scss */
+body.dz-drag-hover #dropzone {
+  display: block;
 }
 
 /* line 1, /Users/dan/working/spire/app/static/scss/_footer.scss */

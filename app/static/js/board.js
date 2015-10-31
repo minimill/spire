@@ -1,12 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
 
+  var showOverlay = false;
+  var dragTimeout = -1;
+
   // Forms
   var textForm = document.getElementById('text-form');
   var imageForm = document.getElementById('image-form');
   var boardForm = document.getElementById('board-form');
 
   // Inputs
-  var comboInput = document.getElementById('combo');
   var filenameInput = document.getElementById('image-filename');
   var textInput = document.getElementById('text-text');
   var boardTitle = document.getElementById('board-title');
@@ -18,6 +20,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var images = document.getElementById('images');
   var colors = document.getElementById('colors');
+  var overlay = document.getElementById('overlay');
+  var dropzone = document.getElementById('dropzone');
 
   function imageTemplate(url) {
     return '<div class="image"><img src="' + url + '"></div>';
@@ -26,6 +30,14 @@ document.addEventListener('DOMContentLoaded', function() {
   function colorTemplate(hex) {
     return '<div class="color" style="background-color: #' + hex + '">' +
       '<p>#' + hex + '</p></div>';
+  }
+
+  function validImageUrl(str) {
+    var pattern = new RegExp('https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)');
+    if(!pattern.test(str) || url.match(/\.(jpeg|jpg|gif|png)$/) == null) {
+      return false;
+    }
+    return true;
   }
 
   /**
@@ -123,19 +135,63 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  function submitText() {
-    textInput.value = comboInput.value;
+  function attemptToCreateImagePlaceholder(url) {
+    if (!validImageUrl(url)) {
+      return;
+    }
+    var img = new Image();
+    img.onload =  function() {
+      images.insertAdjacentHTML('beforeend', imageTemplate(url));
+    };
+    img.src = url;
+  }
+
+  function submitText(text) {
+    textInput.value = text;
     submitFormAjax(textForm, {
       success: function(response) {
         textInput.value = '';
-        comboInput.value = '';
         if (response.data.image) {
-          images.insertAdjacentHTML('beforeend', imageTemplate(response.data.image));
+
         } else if (response.data.hex) {
           colors.insertAdjacentHTML('beforeend', colorTemplate(response.data.hex));
         }
       }
     });
+    attemptToCreateImagePlaceholder(text);
+  }
+
+  function showDropzone() {
+    dropzone.className += ' active';
+  }
+
+  function hideDropzone() {
+    dropzone.className = dropzone.className.replace('active', '');
+  }
+
+  function dragLeave(e) {
+    console.log('leave')
+    showOverlay = false;
+    clearTimeout(dragTimeout);
+    dragTimeout = setTimeout(function(){
+      console.log('leave callback')
+      if(!showOverlay){
+        console.log('leave for good')
+        hideDropzone();
+      }
+    }, 200);
+  }
+
+  function dragEnter(e) {
+    console.log('enter')
+    showDropzone();
+    showOverlay = true;
+  }
+
+  function dragOver(e) {
+    console.log('over')
+    showOverlay = true;
+    clearTimeout(dragTimeout);
   }
 
   var myDropzone = new Dropzone('#dropzone', {
@@ -151,7 +207,17 @@ document.addEventListener('DOMContentLoaded', function() {
         file.previewElement.dataset.s3Filename = filename;
         formData.append('key', filename);
       });
+      this.on('dragleave', function(e) {
+        dragLeave();
+      });
+      this.on('drop', function(e) {
+        dragLeave();
+        e.dataTransfer.items[0].getAsString(function(url) {
+          submitText(url);
+        });
+      })
     },
+
     success: function(file, response) {
       filenameInput.value = file.previewElement.dataset.s3Filename;
       submitFormAjax(imageForm, {
@@ -162,9 +228,12 @@ document.addEventListener('DOMContentLoaded', function() {
     },
   });
 
-  document.getElementById('dropzone').addEventListener('submit', function(e) {
+  document.body.addEventListener("dragenter", dragEnter);
+  document.body.addEventListener("dragover", dragOver);
+
+  textForm.addEventListener('submit', function(e) {
     e.preventDefault();
-    submitText();
+    submitText(textInput.value);
     return false;
   });
 

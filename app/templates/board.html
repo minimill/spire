@@ -24,14 +24,6 @@
     {{ macros.render_field(forms.board.slug, required=True) }}
     {{ macros.render_field(forms.board.old_slug, required=True) }}
   </form>
-  <form action="{{ url_for('add_text', board_slug=board.slug) }}"
-    method="POST"
-    id="text-form"
-    class="hidden text-form">
-    {{ macros.render_field(forms.text.csrf_token) }}
-    {{ macros.render_field(forms.text.text) }}
-    {{ macros.render_field(forms.text.slug) }}
-  </form>
   <form action="{{ url_for('add_image', board_slug=board.slug) }}"
     method="POST"
     id="image-form"
@@ -41,8 +33,16 @@
     {{ macros.render_field(forms.image.slug) }}
   </form>
   <section>
+    <form action="{{ url_for('add_text', board_slug=board.slug) }}"
+      method="POST"
+      id="text-form"
+      class="text-form">
+      {{ macros.render_field(forms.text.csrf_token) }}
+      {{ macros.render_field(forms.text.text) }}
+      {{ macros.render_field(forms.text.slug, hidden=True) }}
+      <input type="submit" class="hidden">
+    </form>
     <form action="https://swiftly-uploads.s3.amazonaws.com/" id="dropzone">
-      <input name="x-ignore-combo" id="combo" type="text" placeholder="Insert an image link / hex code or drag and drop a file">
       <!-- <input name="key" type="hidden" value=""> -->
       <input name="acl" type="hidden" value="public-read">
       <input name="policy" type="hidden" value="{{ aws.policy }}">
