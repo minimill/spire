@@ -11,6 +11,7 @@ class Board(db.Model):
     images = db.relationship('Image', backref='board')
     websites = db.relationship('Website', backref='board')
     colors = db.relationship('Color', backref='board')
+    text_blocks = db.relationship('TextBlock', backref='board')
 
     def __init__(self, title='', slug=None):
         self.title = title
@@ -40,11 +41,42 @@ class Image(db.Model):
         return app.config['S3_BASEURL'] + self.filename
 
 
+class TextBlock(db.Model):
+    __tablename__ = 'textblock'
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.UnicodeText())
+    board_id = db.Column(db.Integer, db.ForeignKey('board.id'))
+
+
 class Color(db.Model):
     __tablename__ = 'color'
     id = db.Column(db.Integer, primary_key=True)
     hex_rep = db.Column(db.String(8))
     board_id = db.Column(db.Integer, db.ForeignKey('board.id'))
+
+    def __init__(self, hex, *args, **kwargs):
+        self.hex = hex
+        super(Color, self).__init__(*args, **kwargs)
+
+    @staticmethod
+    def is_valid_hex(raw_hex):
+        hex = raw_hex.strip().lstrip('#')
+        if (not all(c in string.hexdigits for c in hex) or
+                len(hex) not in (3, 6)):
+            return False
+        return True
+
+    @property
+    def hex(self):
+        return self.hex_rep
+
+    @hex.setter
+    def set_hex(self, hex):
+        if not Color.is_valid_hex(hex):
+            raise ValueError('Invalid color hex value')
+        if len(hex) == 3:
+            hex = ''.join((c + c for c in hex))
+        self.hex_rep = hex
 
 
 class Website(db.Model):
@@ -56,6 +88,3 @@ class Website(db.Model):
                                                         uselist=False))
     image_id = db.Column(db.Integer, db.ForeignKey('image.id'))
     board_id = db.Column(db.Integer, db.ForeignKey('board.id'))
-
-    def __init__(self, url):
-        self.url = url

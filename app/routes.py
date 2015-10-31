@@ -1,10 +1,11 @@
 import os
 from flask import (render_template, abort, redirect, url_for,
                    send_from_directory)
-from app.lib.aws import new_aws_formdata
-from app.lib.json_response import json_success, json_error_message
-from app.models import Board, Color, Image
+from app import s3
+from app.models import Board, Image
 from app.forms import get_forms, EditBoardForm, TextForm, ImageForm
+from app.lib.process_text import process_text
+from app.lib.json_response import json_success, json_error_message
 
 
 def register_routes(app, db):
@@ -33,7 +34,7 @@ def register_routes(app, db):
             abort(404)
 
         forms = get_forms(board)
-        aws = new_aws_formdata()
+        aws = s3.new_aws_formdata()
         return render_template('board.html', board=board, aws=aws, forms=forms)
 
     @app.route('/<board_slug>', methods=['POST'])
@@ -42,18 +43,26 @@ def register_routes(app, db):
         if not board:
             abort(404)
 
-        board_form = EditBoardForm()
-        if board_form.validate_on_submit():
-            board.title = board_form.title.data
-            board.slug = board_form.slug.data
+        form = EditBoardForm()
+        if form.validate_on_submit():
+            board.title = form.title.data
+            board.slug = form.slug.data
             db.session.commit()
             return json_success({
                 'slug': board.slug,
                 'title': board.title,
             })
 
+        error_data = {
+            'errors': form.errors,
+            'revert': {
+                'slug': board.slug,
+                'title': board.title
+            }
+        }
+
         return json_error_message('Failed to save board',
-                                  error_data=board_form.errors)
+                                  error_data=error_data)
 
     @app.route('/<board_slug>/text/', methods=['POST'])
     def add_text(board_slug):
@@ -64,13 +73,9 @@ def register_routes(app, db):
 
         form = TextForm()
         if form.validate_on_submit():
-            color = Color(hex_rep=form.text.data)
-            db.session.add(color)
-            board.colors.append(color)
+            response_data = process_text(board, form.text.data)
             db.session.commit()
-            return json_success({
-                'hex': color.hex
-            })
+            return json_success(response_data)
 
         return json_error_message('Failed to create color',
                                   error_data=form.errors)

@@ -1,3 +1,4 @@
+from os import path, pardir
 from sys import exit, stderr
 
 try:
@@ -18,6 +19,12 @@ try:
     META_IMAGE = 'img/lock.svg'
     SQLALCHEMY_DATABASE_URI = 'sqlite:///test.db'
     S3_BASEURL = 'https://s3.amazonaws.com/minimill-spire/'
+    S3_LOCATION = 'https://minimill.amazonaws.com/'
+    S3_BUCKET = 'minimill-spire'
+
+    BASEDIR = path.abspath(path.join(path.dirname(__file__), pardir))
+    RELATIVE_UPLOAD_FOLDER = 'app/static/img/tmp/'
+    UPLOAD_FOLDER = path.join(BASEDIR, RELATIVE_UPLOAD_FOLDER)
 
 except ImportError:
     print >> stderr, 'Could not find config/secrets.py.  Do you have one?'

@@ -1,14 +1,50 @@
 document.addEventListener('DOMContentLoaded', function() {
 
+  // Forms
+  var textForm = document.getElementById('text-form');
+  var imageForm = document.getElementById('image-form');
+  var boardForm = document.getElementById('board-form');
+
+  // Inputs
+  var comboInput = document.getElementById('combo');
+  var filenameInput = document.getElementById('image-filename');
+  var textInput = document.getElementById('text-text');
+  var boardTitle = document.getElementById('board-title');
+
+  // Slugs
+  var boardSlug = document.getElementById('board-slug');
+  var imageSlug = document.getElementById('image-slug');
+  var textSlug = document.getElementById('text-slug');
+
+  var dropzonePreviews = document.getElementById('dropzone-previews');
+
+  function imageTemplate(url) {
+    return '<div class="image"><img src="' + url + '"></div>';
+  }
+
   /**
    * Takes a form node and sends it over AJAX.
    * @param {HTMLFormElement} form - Form node to send
    * @param {function} callback - Function to handle onload.
    *                              this variable will be bound correctly.
    */
-  function submitFormAjax(form, callback) {
+  function submitFormAjax(form, functions) {
     var url = form.action;
     var xhr = new XMLHttpRequest();
+
+    var callbacks = {
+      success: functions.success || function() {},
+      error: functions.error || function(response) { console.log(response); }
+    };
+
+    var callback = function() {
+      var response = JSON.parse(this.response);
+      if (response.status === 'success') {
+        callbacks.success(response);
+      } else if (response.status === 'error') {
+        callbacks.error(response);
+      }
+    };
 
     //This is a bit tricky, [].fn.call(form.elements, ...) allows us to call .fn
     //on the form's elements, even though it's not an array. Effectively
@@ -53,19 +89,44 @@ document.addEventListener('DOMContentLoaded', function() {
     return 'uploads/' + timestamp + extention;
   }
 
-  // Forms
-  var textForm = document.getElementById('text-form');
-  var imageForm = document.getElementById('image-form');
+  function updateSlugs(slug) {
+    boardSlug.value = slug;
+    imageSlug.value = slug;
+    textSlug.value = slug;
+    boardForm.action = slug;
+    textForm.action = slug + '/text/';
+    imageForm.action = slug + '/image/';
+  }
 
-  // Inputs
-  var comboInput = document.getElementById('combo');
-  var filenameInput = document.getElementById('image-filename');
-  var textInput = document.getElementById('board-text');
+  function saveBoard() {
+    submitFormAjax(boardForm, {
+      success: function(response) {
+        if (response.data.slug) {
+          var title = response.data.title + ' - Spire';
+          window.history.pushState({}, title, response.data.slug);
+          document.title = title;
+          updateSlugs(response.data.slug);
+        }
+      },
+      error: function(response) {
+        if (response.error.data.revert) {
+          boardSlug.value = response.error.data.revert.slug;
+          boardTitle.value = response.error.data.revert.title;
+        }
+      },
+    });
+  }
 
-  // Slugs
-  var boardSlug = document.getElementById('board-slug');
-  var imageSlug = document.getElementById('image-slug');
-  var textSlug = document.getElementById('text-slug');
+  function submitText() {
+    textInput.value = comboInput.value;
+    submitFormAjax(textForm, {
+      success: function(response) {
+        if (response.data.image) {
+          dropzonePreviews.insertAdjacentHTML('beforeend', imageTemplate(response.data.image));
+        }
+      }
+    });
+  }
 
   var myDropzone = new Dropzone('#dropzone', {
     url: 'https://minimill-spire.s3.amazonaws.com',
@@ -83,46 +144,19 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     success: function(file, response) {
       filenameInput.value = file.previewElement.dataset.s3Filename;
-      submitFormAjax(imageForm, function() {
-        var response = JSON.parse(this.response);
-        console.log(response);
+      submitFormAjax(imageForm, {
+        success: function(response) {
+          console.log(response);
+        }
       });
     },
   });
 
-  function updateSlugs(slug) {
-    boardSlug.value = slug;
-    imageSlug.value = slug;
-    textSlug.value = slug;
-    boardForm.action = slug;
-    textForm.action = slug + '/text/';
-    imageForm.action = slug + '/image/';
-  }
-
-
   document.getElementById('dropzone').addEventListener('submit', function(e) {
     e.preventDefault();
-    textInput.value = comboInput.value;
-    submitFormAjax(textForm, function() {
-      var response = JSON.parse(this.response);
-      console.log(response);
-    });
+    submitText();
     return false;
   });
-
-  var boardForm = document.getElementById('board-form')
-  function saveBoard() {
-    submitFormAjax(boardForm, function() {
-      var response = JSON.parse(this.response);
-      console.log(response);
-      if (response.data.slug) {
-        var title = response.data.title + ' - Spire';
-        window.history.pushState({}, title, response.data.slug);
-        document.title = title;
-        updateSlugs(response.data.slug);
-      }
-    });
-  }
 
   var boardInputs = boardForm.getElementsByTagName('input');
   var autoSaveTimeoutId;

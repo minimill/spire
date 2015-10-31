@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% import "macros.html" as macros %}
-{% block title %}{{ board.title }} - {{ super() }}{% endblock %}
+{% if board.title %}
+{% set title = board.title %}
+{% else %}
+{% set title = 'New Project' %}
+{% endif %}
+{% block title %}{{ title }} - {{ super() }}{% endblock %}
 
 {% block js %}
 {{ super() }}
@@ -17,6 +22,7 @@
       {{ macros.render_field(forms.board.csrf_token) }}
       {{ macros.render_field(forms.board.title, class="title", required=True) }}
       {{ macros.render_field(forms.board.slug, required=True) }}
+      {{ macros.render_field(forms.board.old_slug, required=True) }}
     </form>
     <form action="{{ url_for('add_text', board_slug=board.slug) }}"
       method="POST"
@@ -49,12 +55,12 @@
           <p>#{{ color.hex_rep }}</p>
         </div>
         {% endfor %}
+        <div class="dropzone-previews" id="dropzone-previews"></div>
         {% for image in board.images %}
         <div class="image">
           <img src="{{ image.url }}">
         </div>
         {% endfor %}
-        <div class="dropzone-previews"></div>
     </section>
     <footer>
       <a href="{{ url_for('new') }}"><img src="{{ url_for('static', filename='img/spire-logo.svg') }}"></a> <span><a href="{{ url_for('new') }}">Spire</a> by <a href="https://minimill.co">Minimill</a></span>
