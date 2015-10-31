@@ -136,9 +136,9 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function attemptToCreateImagePlaceholder(url) {
-    if (!validImageUrl(url)) {
-      return;
-    }
+    // if (!validImageUrl(url)) {
+    //   return;
+    // }
     var img = new Image();
     img.onload =  function() {
       images.insertAdjacentHTML('beforeend', imageTemplate(url));
