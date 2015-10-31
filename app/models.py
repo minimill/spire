@@ -55,7 +55,7 @@ class Color(db.Model):
     board_id = db.Column(db.Integer, db.ForeignKey('board.id'))
 
     def __init__(self, hex, *args, **kwargs):
-        self.hex = hex
+        self.hex_rep = self._valid_hex(hex)
         super(Color, self).__init__(*args, **kwargs)
 
     @staticmethod
@@ -66,17 +66,21 @@ class Color(db.Model):
             return False
         return True
 
+    def _valid_hex(self, hex):
+        hex = hex.lstrip('#')
+        if not Color.is_valid_hex(hex):
+            raise ValueError('Invalid color hex value')
+        if len(hex) == 3:
+            hex = ''.join((c + c for c in hex))
+        return hex.upper()
+
     @property
     def hex(self):
         return self.hex_rep
 
     @hex.setter
     def set_hex(self, hex):
-        if not Color.is_valid_hex(hex):
-            raise ValueError('Invalid color hex value')
-        if len(hex) == 3:
-            hex = ''.join((c + c for c in hex))
-        self.hex_rep = hex
+        self.hex_rep = self._valid_hex(hex)
 
 
 class Website(db.Model):

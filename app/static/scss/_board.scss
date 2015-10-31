@@ -1,3 +1,5 @@
+@import 'util';
+
 .color {
     height: 11.25rem;
     position: relative;
@@ -46,4 +48,8 @@
 
 #combo {
     margin: 2.5rem 0;
+}
+
+#colors {
+    @include clearfix;
 }

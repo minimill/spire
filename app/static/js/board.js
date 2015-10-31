@@ -16,10 +16,16 @@ document.addEventListener('DOMContentLoaded', function() {
   var imageSlug = document.getElementById('image-slug');
   var textSlug = document.getElementById('text-slug');
 
-  var dropzonePreviews = document.getElementById('dropzone-previews');
+  var images = document.getElementById('images');
+  var colors = document.getElementById('colors');
 
   function imageTemplate(url) {
     return '<div class="image"><img src="' + url + '"></div>';
+  }
+
+  function colorTemplate(hex) {
+    return '<div class="color" style="background-color: #' + hex + '">' +
+      '<p>#' + hex + '</p></div>';
   }
 
   /**
@@ -121,10 +127,12 @@ document.addEventListener('DOMContentLoaded', function() {
     textInput.value = comboInput.value;
     submitFormAjax(textForm, {
       success: function(response) {
+        textInput.value = '';
+        comboInput.value = '';
         if (response.data.image) {
-          dropzonePreviews.insertAdjacentHTML('beforeend', imageTemplate(response.data.image));
-          textInput.value = '';
-          comboInput.value = '';
+          images.insertAdjacentHTML('beforeend', imageTemplate(response.data.image));
+        } else if (response.data.hex) {
+          colors.insertAdjacentHTML('beforeend', colorTemplate(response.data.hex));
         }
       }
     });

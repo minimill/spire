@@ -323,7 +323,12 @@ section:after {
   display: none;
 }
 
-/* line 1, /Users/dan/working/spire/app/static/scss/_board.scss */
+/* line 1, /Users/dan/working/spire/app/static/scss/_util.scss */
+.hidden {
+  display: none;
+}
+
+/* line 3, /Users/dan/working/spire/app/static/scss/_board.scss */
 .color {
   height: 11.25rem;
   position: relative;
@@ -332,7 +337,7 @@ section:after {
   width: 50%;
   float: left;
 }
-/* line 9, /Users/dan/working/spire/app/static/scss/_board.scss */
+/* line 11, /Users/dan/working/spire/app/static/scss/_board.scss */
 .color p {
   position: absolute;
   top: 50%;
@@ -341,30 +346,30 @@ section:after {
   width: 100%;
 }
 
-/* line 18, /Users/dan/working/spire/app/static/scss/_board.scss */
+/* line 20, /Users/dan/working/spire/app/static/scss/_board.scss */
 .image {
   display: block;
   margin-top: 2.5rem;
 }
-/* line 22, /Users/dan/working/spire/app/static/scss/_board.scss */
+/* line 24, /Users/dan/working/spire/app/static/scss/_board.scss */
 .image img {
   width: 100%;
 }
 
-/* line 27, /Users/dan/working/spire/app/static/scss/_board.scss */
+/* line 29, /Users/dan/working/spire/app/static/scss/_board.scss */
 #board-form input {
   border-color: transparent;
 }
-/* line 30, /Users/dan/working/spire/app/static/scss/_board.scss */
+/* line 32, /Users/dan/working/spire/app/static/scss/_board.scss */
 #board-form input:invalid, #board-form input:hover {
   border-color: #f2f2f2;
 }
-/* line 34, /Users/dan/working/spire/app/static/scss/_board.scss */
+/* line 36, /Users/dan/working/spire/app/static/scss/_board.scss */
 #board-form input:focus {
   border-color: #cccccc;
 }
 
-/* line 39, /Users/dan/working/spire/app/static/scss/_board.scss */
+/* line 41, /Users/dan/working/spire/app/static/scss/_board.scss */
 #board-slug:before {
   display: block;
   content: "spire.minimill.co/";
@@ -373,9 +378,16 @@ section:after {
   height: 10px;
 }
 
-/* line 47, /Users/dan/working/spire/app/static/scss/_board.scss */
+/* line 49, /Users/dan/working/spire/app/static/scss/_board.scss */
 #combo {
   margin: 2.5rem 0;
+}
+
+/* line 6, /Users/dan/working/spire/app/static/scss/_util.scss */
+#colors:after {
+  display: block;
+  content: ' ';
+  clear: both;
 }
 
 /* line 1, /Users/dan/working/spire/app/static/scss/_footer.scss */
