@@ -123,6 +123,8 @@ document.addEventListener('DOMContentLoaded', function() {
       success: function(response) {
         if (response.data.image) {
           dropzonePreviews.insertAdjacentHTML('beforeend', imageTemplate(response.data.image));
+          textInput.value = '';
+          comboInput.value = '';
         }
       }
     });
