@@ -56,7 +56,7 @@
       {{ macros.render_field(forms.text.slug, hidden=True) }}
       <input type="submit" class="hidden">
     </form>
-    <form action="https://swiftly-uploads.s3.amazonaws.com/" id="dropzone">
+    <form action="https://swiftly-uploads.s3.amazonaws.com/" id="dropzone" class="dropzone-overlay">
       <!-- <input name="key" type="hidden" value=""> -->
       <input name="acl" type="hidden" value="public-read">
       <input name="policy" type="hidden" value="{{ aws.policy }}">
@@ -64,7 +64,7 @@
       <input name="content-type" type="hidden" value="application/octet-stream">
       <input name="AWSAccessKeyId" type="hidden" value="{{ config.AWS_ACCESS_KEY_ID }}">
     </form>
-    <div id="colors">
+    <div id="colors" class="colors">
       {% for color in board.colors %}
       <div class="color" style="background-color: #{{color.hex}}" data-id="{{color.id}}">
         <p>#{{ color.hex }}</p>

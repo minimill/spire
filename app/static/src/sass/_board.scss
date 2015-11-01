@@ -1,0 +1,92 @@
+@import 'util';
+
+.color {
+  display: inline-block;
+  float: left;
+  height: 11.25rem;
+  margin-top: 2.5rem;
+  position: relative;
+  width: 50%;
+
+  p {
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+  }
+}
+
+.image {
+  display: block;
+  margin-top: 2.5rem;
+
+  img {
+    display: block;
+    width: 100%;
+  }
+}
+
+
+.image, .color {
+  overflow: hidden;
+  position: relative;
+
+  .delete-image, .delete-color {
+    background-color: rgba($white, 0.5);
+    bottom: 0;
+    height: 1rem;
+    line-height: 1rem;
+    padding: 0.75rem;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    transform: translateY(100%);
+    transition: ease 0.2s transform;
+    width: 1rem;
+  }
+
+  &:hover {
+    .delete-image, .delete-color {
+      transform: translateY(0);
+    }
+  }
+}
+
+.board-form input {
+  border-color: $transparent;
+
+  &:invalid, &:hover {
+    border-color: $light-gray;
+  }
+
+  &:focus {
+    border-color: $gray;
+  }
+}
+
+.colors {
+  @include clearfix;
+}
+
+.dropzone-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  transition: visibility 175ms, opacity 175ms;
+  visibility: hidden;
+  width: 100%;
+  z-index: 5;
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.dz-drag-hover .dropzone-overlay {
+  display: block;
+}

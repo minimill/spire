@@ -1,5 +1,4 @@
 from flask import Flask
-from flask.ext.assets import Environment, Bundle
 from flask.ext.sqlalchemy import SQLAlchemy
 from sys import argv
 from app.lib.aws import S3
@@ -17,7 +16,7 @@ def create_app():
     global login_manager
 
     # Flask
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder='static/dist/', static_url_path='/static')
     app.config.from_object('config.flask_config')
 
     # SQLAlchemy
@@ -25,14 +24,6 @@ def create_app():
 
     # Amazon S3
     s3 = S3(app)
-
-    # Assets
-    assets = Environment(app)
-    scss = Bundle('scss/style.scss',
-                  filters='scss',
-                  output='css/gen/style.css',
-                  depends='scss/*.scss')
-    assets.register('scss_all', scss)
 
     # Debug
     app.config['DEBUG'] = (len(argv) == 2 and argv[1] == 'debug')

@@ -1,8 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-  var showOverlay = false;
-  var dragTimeout = -1;
-
   // Forms
   var textForm = document.getElementById('text-form');
   var imageForm = document.getElementById('image-form');
@@ -27,6 +24,12 @@ document.addEventListener('DOMContentLoaded', function() {
   var overlay = document.getElementById('overlay');
   var dropzone = document.getElementById('dropzone');
 
+  var showOverlay = false;
+  var dragTimeout = -1;
+  var i;
+  var boardInputs = boardForm.getElementsByTagName('input');
+  var autoSaveTimeoutId;
+
   function imageTemplate(image) {
     return '<div class="image" data-id="' + image.id + '">' +
     '<img src="' + image.url + '">' +
@@ -36,9 +39,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function colorTemplate(color) {
     return '<div class="color" style="background-color: #' + color.hex + '" data-id="' + color.id + '">' +
-      '<p>#' + color.hex + '</p>' +
-      '<a class="delete-color" href="#">X</a>' +
-      '</div>';
+    '<p>#' + color.hex + '</p>' +
+    '<a class="delete-color" href="#">X</a>' +
+    '</div>';
   }
 
   function validImageUrl(url) {
@@ -57,8 +60,10 @@ document.addEventListener('DOMContentLoaded', function() {
     var xhr = new XMLHttpRequest();
 
     var callbacks = {
-      success: functions.success || function() {},
-      error: functions.error || function(response) { console.log(response); }
+      success: functions.success || function() { /* noop */ },
+
+      error: functions.error || function(response) { console.log(response); },
+
     };
 
     var callback = function() {
@@ -75,12 +80,12 @@ document.addEventListener('DOMContentLoaded', function() {
     //Filtering all of the fields on the form
     var params = [].filter.call(form.elements, function() { return true; })
     .map(function(el) {
-        //Map each field into a name=value string, make sure to properly escape!
-        return encodeURIComponent(el.name) + '=' + encodeURIComponent(el.value);
+      //Map each field into a name=value string, make sure to properly escape!
+      return encodeURIComponent(el.name) + '=' + encodeURIComponent(el.value);
     }).join('&'); //Then join all the strings by &
 
-    xhr.open("POST", url);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.open('POST', url);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
     //.bind ensures that this inside of the function is the XHR object.
     xhr.onload = callback.bind(xhr);
@@ -113,6 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
         extention = '.unknown';
         break;
     }
+
     return 'uploads/' + timestamp + extention;
   }
 
@@ -135,24 +141,28 @@ document.addEventListener('DOMContentLoaded', function() {
           updateSlugs(response.data.slug);
         }
       },
+
       error: function(response) {
         if (response.error.data.revert) {
           boardSlug.value = response.error.data.revert.slug;
           boardTitle.value = response.error.data.revert.title;
         }
       },
+
     });
   }
 
   function attemptToCreateImagePlaceholder(url) {
     if (!validImageUrl(url)) {
-      console.log(url, ' is not a URL.')
+      console.log(url, ' is not a URL.');
       return;
     }
+
     images.insertAdjacentHTML('beforeend', imageTemplate({
       url: url,
-      id: -1
+      id: -1,
     }));
+
     return images.lastChild;
   }
 
@@ -162,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
     submitFormAjax(textForm, {
       success: function(response) {
         textInput.value = '';
-        console.log(response.data.image, previewElement)
+
         if (response.data.image && previewElement) {
           previewElement.dataset.id = response.data.image.id;
           registerDeleteImageButton(previewElement.querySelector('.delete-image'));
@@ -170,7 +180,13 @@ document.addEventListener('DOMContentLoaded', function() {
           colors.insertAdjacentHTML('beforeend', colorTemplate(response.data.color));
           registerDeleteColorButton(colors.lastChild.querySelector('.delete-color'));
         }
-      }
+
+      },
+
+      error: function(response) {
+        console.log(response.error.data);
+      },
+
     });
   }
 
@@ -183,28 +199,67 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function dragLeave(e) {
-    console.log('leave')
     showOverlay = false;
     clearTimeout(dragTimeout);
-    dragTimeout = setTimeout(function(){
-      console.log('leave callback')
-      if(!showOverlay){
-        console.log('leave for good')
+    dragTimeout = setTimeout(function() {
+      if (!showOverlay) {
         hideDropzone();
       }
     }, 200);
   }
 
   function dragEnter(e) {
-    console.log('enter')
     showDropzone();
     showOverlay = true;
   }
 
   function dragOver(e) {
-    console.log('over')
     showOverlay = true;
     clearTimeout(dragTimeout);
+  }
+
+  function registerAutoSave(input) {
+    input.addEventListener('blur', function() {
+      clearTimeout(autoSaveTimeoutId);
+      autoSaveTimeoutId = setTimeout(saveBoard, 500);
+    });
+  }
+
+  function deleteBlock(event, idInput, deleteForm) {
+    event.preventDefault();
+    var block = event.target.parentNode;
+    if (block.dataset.id === -1) {
+      console.log('Can\'t delete.');
+    }
+
+    idInput.value = block.dataset.id;
+
+    // Hide the block
+    block.className += ' hidden';
+    submitFormAjax(deleteForm, {
+      success: function(response) {
+        // Delete the block
+        block.parentNode.removeChild(block);
+      },
+
+      error: function(response) {
+        // Show the block again
+        block.className = block.className.replace('hidden', '');
+      },
+
+    });
+  }
+
+  function registerDeleteImageButton(button) {
+    button.addEventListener('click', function(event) {
+      deleteBlock(event, deleteImageId, deleteImageForm);
+    });
+  }
+
+  function registerDeleteColorButton(button) {
+    button.addEventListener('click', function(event) {
+      deleteBlock(event, deleteColorId, deleteColorForm);
+    });
   }
 
   var myDropzone = new Dropzone('#dropzone', {
@@ -216,20 +271,22 @@ document.addEventListener('DOMContentLoaded', function() {
     previewTemplate: document.getElementById('preview-template').innerHTML,
     clickable: false,
     init: function() {
-      this.on('sending', function(file, xhr, formData){
+      this.on('sending', function(file, xhr, formData) {
         var filename = getFilename(file);
         file.previewElement.dataset.s3Filename = filename;
         formData.append('key', filename);
       });
+
       this.on('dragleave', function(e) {
         dragLeave();
       });
+
       this.on('drop', function(e) {
         dragLeave();
         e.dataTransfer.items[0].getAsString(function(url) {
           submitText(url);
         });
-      })
+      });
     },
 
     success: function(file, response) {
@@ -240,13 +297,15 @@ document.addEventListener('DOMContentLoaded', function() {
             file.previewElement.dataset.id = response.data.image.id;
             registerDeleteImageButton(file.previewElement.querySelector('.delete-image'));
           }
-        }
+        },
+
       });
     },
+
   });
 
-  document.body.addEventListener("dragenter", dragEnter);
-  document.body.addEventListener("dragover", dragOver);
+  document.body.addEventListener('dragenter', dragEnter);
+  document.body.addEventListener('dragover', dragOver);
 
   textForm.addEventListener('submit', function(e) {
     e.preventDefault();
@@ -254,55 +313,17 @@ document.addEventListener('DOMContentLoaded', function() {
     return false;
   });
 
-  var boardInputs = boardForm.getElementsByTagName('input');
-  var autoSaveTimeoutId;
-  for(var i = 0; i < boardInputs.length; i++) {
-    boardInputs[i].addEventListener('blur', function() {
-      clearTimeout(autoSaveTimeoutId);
-      autoSaveTimeoutId = setTimeout(saveBoard, 500);
-    });
-  }
-
-  function deleteBlock(event, idInput, deleteForm) {
-    event.preventDefault();
-    var block = event.target.parentNode;
-    if (block.dataset.id === -1) {
-      console.log('Can\'t delete.')
-    }
-    idInput.value = block.dataset.id;
-    // Hide the block
-    block.className += ' hidden';
-    submitFormAjax(deleteForm, {
-      success: function(response) {
-        // Delete the block
-        block.parentNode.removeChild(block);
-      },
-      error: function(response) {
-        // Show the block again
-        block.className = block.className.replace('hidden', '');
-      }
-    });
-  }
-
-  registerDeleteImageButton = function(button) {
-    button.addEventListener('click', function(event) {
-      deleteBlock(event, deleteImageId, deleteImageForm);
-    });
-  }
-
-  registerDeleteColorButton = function(button) {
-    button.addEventListener('click', function(event) {
-      deleteBlock(event, deleteColorId, deleteColorForm);
-    });
+  for (i = 0; i < boardInputs.length; i++) {
+    registerAutoSave(boardInputs[i]);
   }
 
   var deleteImageButtons = document.getElementsByClassName('delete-image');
-  for (var i = 0; i < deleteImageButtons.length; i++) {
+  for (i = 0; i < deleteImageButtons.length; i++) {
     registerDeleteImageButton(deleteImageButtons[i]);
   }
 
   var deleteColorButtons = document.getElementsByClassName('delete-color');
-  for (var i = 0; i < deleteColorButtons.length; i++) {
+  for (i = 0; i < deleteColorButtons.length; i++) {
     registerDeleteColorButton(deleteColorButtons[i]);
   }
 

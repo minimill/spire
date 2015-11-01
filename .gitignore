@@ -1,7 +1,14 @@
+# Build System
 /bin
 /include
 /lib
-.Python
-secrets.py
+/node_modules
+dist
 .webassets-cache
+
+# Python
+.Python
 *.pyc
+
+# Secrets
+secrets.py

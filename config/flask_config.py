@@ -23,7 +23,7 @@ try:
     S3_BUCKET = 'minimill-spire'
 
     BASEDIR = path.abspath(path.join(path.dirname(__file__), pardir))
-    RELATIVE_UPLOAD_FOLDER = 'app/static/img/tmp/'
+    RELATIVE_UPLOAD_FOLDER = 'app/static/dist/img/tmp/'
     UPLOAD_FOLDER = path.join(BASEDIR, RELATIVE_UPLOAD_FOLDER)
 
 except ImportError:
