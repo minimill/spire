@@ -29,7 +29,7 @@ class S3(object):
         conn = boto.connect_s3(self.access_key_id, self.secret_access_key)
         self.bucket = conn.get_bucket(app.config["S3_BUCKET"])
 
-    def upload_to_s3(self, local_path, filename):
+    def upload_to_s3(self, local_path, filename, content_type):
         # Upload the File
         sml = self.bucket.new_key('uploads/' + filename)
         with open(local_path, 'rb') as local_file:

@@ -32,6 +32,20 @@
     {{ macros.render_field(forms.image.filename) }}
     {{ macros.render_field(forms.image.slug) }}
   </form>
+  <form action="{{ url_for('delete_image') }}"
+    method="POST"
+    id="delete-image-form"
+    class="hidden delete-image-form">
+    {{ macros.render_field(forms.delete_image.csrf_token) }}
+    {{ macros.render_field(forms.delete_image.id) }}
+  </form>
+  <form action="{{ url_for('delete_color') }}"
+    method="POST"
+    id="delete-color-form"
+    class="hidden delete-color-form">
+    {{ macros.render_field(forms.delete_color.csrf_token) }}
+    {{ macros.render_field(forms.delete_color.id) }}
+  </form>
   <section>
     <form action="{{ url_for('add_text', board_slug=board.slug) }}"
       method="POST"
@@ -52,16 +66,24 @@
     </form>
     <div id="colors">
       {% for color in board.colors %}
-      <div class="color" style="background-color: #{{color.hex}}">
+      <div class="color" style="background-color: #{{color.hex}}" data-id="{{color.id}}">
         <p>#{{ color.hex }}</p>
+        <a class="delete-color" href="#">X</a>
       </div>
       {% endfor %}
     </div>
     <div class="dropzone-previews"></div>
+    <div id="preview-template" class="hidden">
+      <div class="image dz-preview dz-file-preview" data-id="">
+        <img data-dz-thumbnail />
+        <a class="delete-image" href="#">X</a>
+      </div>
+    </div>
     <div id="images">
       {% for image in board.images %}
-      <div class="image">
-        <img src="{{ image.url }}">
+      <div class="image" data-id="{{image.id}}">
+          <img src="{{ image.url }}">
+          <a class="delete-image" href="#">X</a>
       </div>
       {% endfor %}
     </div>

@@ -2,8 +2,9 @@ import os
 from flask import (render_template, abort, redirect, url_for,
                    send_from_directory)
 from app import s3
-from app.models import Board, Image
-from app.forms import get_forms, EditBoardForm, TextForm, ImageForm
+from app.models import Board, Image, Color
+from app.forms import (get_forms, EditBoardForm, TextForm, ImageForm,
+                       DeleteImageForm, DeleteColorForm)
 from app.lib.process_text import process_text
 from app.lib.json_response import json_success, json_error_message
 
@@ -35,7 +36,10 @@ def register_routes(app, db):
 
         forms = get_forms(board)
         aws = s3.new_aws_formdata()
-        return render_template('board.html', board=board, aws=aws, forms=forms)
+        return render_template('board.html',
+                               board=board,
+                               aws=aws,
+                               forms=forms)
 
     @app.route('/<board_slug>', methods=['POST'])
     def save_board(board_slug):
@@ -94,8 +98,43 @@ def register_routes(app, db):
             board.images.append(image)
             db.session.commit()
             return json_success({
-                'filename': image.filename
+                'image': {
+                    'filename': image.filename,
+                    'id': image.id
+                }
             })
 
         return json_error_message('Failed to create image',
+                                  error_data=form.errors)
+
+    @app.route('/image/delete', methods=['POST'])
+    def delete_image():
+        form = DeleteImageForm()
+        if form.validate_on_submit():
+            image = Image.query.filter_by(id=form.id.data).first()
+            if not image:
+                abort(404)
+            db.session.delete(image)
+            db.session.commit()
+            return json_success({
+                'deleted': image.id
+            })
+
+        return json_error_message('Failed to delete image',
+                                  error_data=form.errors)
+
+    @app.route('/color/delete', methods=['POST'])
+    def delete_color():
+        form = DeleteColorForm()
+        if form.validate_on_submit():
+            color = Color.query.filter_by(id=form.id.data).first()
+            if not color:
+                abort(404)
+            db.session.delete(color)
+            db.session.commit()
+            return json_success({
+                'deleted': color.id
+            })
+
+        return json_error_message('Failed to delete color',
                                   error_data=form.errors)

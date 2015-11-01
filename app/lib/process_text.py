@@ -27,15 +27,17 @@ def _process_text_as_url(board, url):
     content_type = resp.headers['Content-Type']
     if content_type in MIMEType.IMAGES:
         local_path, filename = _download_image_at_url(url)
-        s3.upload_to_s3(local_path, filename)
+        s3.upload_to_s3(local_path, filename, content_type)
         os.remove(local_path)
         image = Image(filename='uploads/' + filename)
         db.session.add(image)
         board.images.append(image)
         return {
-            'image': image.url
+            'image': {
+                'url': image.url,
+                'id': image.id
+            }
         }
-
     elif content_type == MIMEType.HTML:
         raise ValueError('Non-Image URLs not supported')
         # website = Website()
@@ -54,7 +56,10 @@ def process_text(board, text):
         db.session.add(color)
         board.colors.append(color)
         return {
-            'hex': color.hex
+            'color': {
+                'hex': color.hex,
+                'id': color.id
+            }
         }
     else:
         try:

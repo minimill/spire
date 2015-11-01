@@ -2,7 +2,7 @@ from flask_wtf import Form
 from wtforms import StringField
 from wtforms.validators import DataRequired, ValidationError
 from wtforms_components import PassiveHiddenField
-from app.models import Board
+from app.models import Board, Image, Color
 
 BAD_FOLDER = 'Folder name should only contain numbers, letters, and dashes'
 NO_SUCH_SLUG = 'No such slug'
@@ -51,6 +51,27 @@ class UniqueSlug(ValidSlug):
             super(UniqueSlug, self).__call__(form, field)
 
 
+class ValidId(object):
+
+    def __init__(self, model):
+        self.model = model
+
+    def __call__(self, form, field):
+        instance = self.model.query.filter_by(id=field.data).first()
+        if not instance:
+            raise ValidationError('No such %s' % self.model.__class__.__name__)
+
+
+class ValidImageId(ValidId):
+    def __init__(self):
+        super(ValidImageId, self).__init__(Image)
+
+
+class ValidColorId(ValidId):
+    def __init__(self):
+        super(ValidColorId, self).__init__(Color)
+
+
 class SpireForm(Form):
 
     def __init__(self, *args, **kwargs):
@@ -81,11 +102,23 @@ class ImageForm(SpireForm):
     filename = StringField('filename', [DataRequired()])
 
 
+class DeleteImageForm(SpireForm):
+    _prefix = 'delete-image-'
+    id = StringField('id', [DataRequired(), ValidImageId()])
+
+
+class DeleteColorForm(SpireForm):
+    _prefix = 'delete-color-'
+    id = StringField('id', [DataRequired(), ValidColorId()])
+
+
 def get_forms(board):
     return {
         'board': EditBoardForm(title=board.title,
                                slug=board.slug,
                                old_slug=board.slug),
         'text': TextForm(slug=board.slug),
-        'image': ImageForm(slug=board.slug)
+        'image': ImageForm(slug=board.slug),
+        'delete_image': DeleteImageForm(),
+        'delete_color': DeleteColorForm()
     }

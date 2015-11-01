@@ -4,7 +4,8 @@ class MIMEType(object):
     JPEG = 'image/jpeg'
     GIF = 'image/gif'
     BMP = 'image/bmp'
-    IMAGES = (PNG, JPEG, GIF, BMP)
+    SVG = 'image/svg+xml'
+    IMAGES = (PNG, JPEG, GIF, BMP, SVG)
     HTML = 'text/html'
 
     EXTENSIONS = {
@@ -12,6 +13,7 @@ class MIMEType(object):
         JPEG: '.jpeg',
         GIF: '.gif',
         BMP: '.bmp',
+        SVG: '.svg',
         HTML: '.html'
     }
 

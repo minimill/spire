@@ -7,11 +7,15 @@ document.addEventListener('DOMContentLoaded', function() {
   var textForm = document.getElementById('text-form');
   var imageForm = document.getElementById('image-form');
   var boardForm = document.getElementById('board-form');
+  var deleteImageForm = document.getElementById('delete-image-form');
+  var deleteColorForm = document.getElementById('delete-color-form');
 
   // Inputs
   var filenameInput = document.getElementById('image-filename');
   var textInput = document.getElementById('text-text');
   var boardTitle = document.getElementById('board-title');
+  var deleteImageId = document.getElementById('delete-image-id');
+  var deleteColorId = document.getElementById('delete-color-id');
 
   // Slugs
   var boardSlug = document.getElementById('board-slug');
@@ -23,21 +27,23 @@ document.addEventListener('DOMContentLoaded', function() {
   var overlay = document.getElementById('overlay');
   var dropzone = document.getElementById('dropzone');
 
-  function imageTemplate(url) {
-    return '<div class="image"><img src="' + url + '"></div>';
+  function imageTemplate(image) {
+    return '<div class="image" data-id="' + image.id + '">' +
+    '<img src="' + image.url + '">' +
+    '<a class="delete-image" href="#">X</a>' +
+    '</div>';
   }
 
-  function colorTemplate(hex) {
-    return '<div class="color" style="background-color: #' + hex + '">' +
-      '<p>#' + hex + '</p></div>';
+  function colorTemplate(color) {
+    return '<div class="color" style="background-color: #' + color.hex + '" data-id="' + color.id + '">' +
+      '<p>#' + color.hex + '</p>' +
+      '<a class="delete-color" href="#">X</a>' +
+      '</div>';
   }
 
-  function validImageUrl(str) {
-    var pattern = new RegExp('https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)');
-    if(!pattern.test(str) || url.match(/\.(jpeg|jpg|gif|png)$/) == null) {
-      return false;
-    }
-    return true;
+  function validImageUrl(url) {
+    var pattern = /^http[s]?:\/\/[a-zA-Z0-9\.\-\/]+\.(jpeg|jpg|gif|png|svg)$/;
+    return pattern.test(url);
   }
 
   /**
@@ -99,6 +105,9 @@ document.addEventListener('DOMContentLoaded', function() {
       case 'image/bmp':
         extention = '.bmp';
         break;
+      case 'image/svg+xml':
+        extention = '.svg';
+        break;
       default:
         console.log('unknown file type: ', file.type);
         extention = '.unknown';
@@ -136,29 +145,33 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function attemptToCreateImagePlaceholder(url) {
-    // if (!validImageUrl(url)) {
-    //   return;
-    // }
-    var img = new Image();
-    img.onload =  function() {
-      images.insertAdjacentHTML('beforeend', imageTemplate(url));
-    };
-    img.src = url;
+    if (!validImageUrl(url)) {
+      console.log(url, ' is not a URL.')
+      return;
+    }
+    images.insertAdjacentHTML('beforeend', imageTemplate({
+      url: url,
+      id: -1
+    }));
+    return images.lastChild;
   }
 
   function submitText(text) {
     textInput.value = text;
+    previewElement = attemptToCreateImagePlaceholder(text);
     submitFormAjax(textForm, {
       success: function(response) {
         textInput.value = '';
-        if (response.data.image) {
-
-        } else if (response.data.hex) {
-          colors.insertAdjacentHTML('beforeend', colorTemplate(response.data.hex));
+        console.log(response.data.image, previewElement)
+        if (response.data.image && previewElement) {
+          previewElement.dataset.id = response.data.image.id;
+          registerDeleteImageButton(previewElement.querySelector('.delete-image'));
+        } else if (response.data.color) {
+          colors.insertAdjacentHTML('beforeend', colorTemplate(response.data.color));
+          registerDeleteColorButton(colors.lastChild.querySelector('.delete-color'));
         }
       }
     });
-    attemptToCreateImagePlaceholder(text);
   }
 
   function showDropzone() {
@@ -200,6 +213,7 @@ document.addEventListener('DOMContentLoaded', function() {
     thumbnailHeight: null,
     maxThumbnailFilesize: 15,
     previewsContainer: '.dropzone-previews',
+    previewTemplate: document.getElementById('preview-template').innerHTML,
     clickable: false,
     init: function() {
       this.on('sending', function(file, xhr, formData){
@@ -222,7 +236,10 @@ document.addEventListener('DOMContentLoaded', function() {
       filenameInput.value = file.previewElement.dataset.s3Filename;
       submitFormAjax(imageForm, {
         success: function(response) {
-          console.log(response);
+          if (response.data.image) {
+            file.previewElement.dataset.id = response.data.image.id;
+            registerDeleteImageButton(file.previewElement.querySelector('.delete-image'));
+          }
         }
       });
     },
@@ -239,11 +256,54 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var boardInputs = boardForm.getElementsByTagName('input');
   var autoSaveTimeoutId;
-  for(i=0; i<boardInputs.length; i++) {
+  for(var i = 0; i < boardInputs.length; i++) {
     boardInputs[i].addEventListener('blur', function() {
       clearTimeout(autoSaveTimeoutId);
       autoSaveTimeoutId = setTimeout(saveBoard, 500);
     });
+  }
+
+  function deleteBlock(event, idInput, deleteForm) {
+    event.preventDefault();
+    var block = event.target.parentNode;
+    if (block.dataset.id === -1) {
+      console.log('Can\'t delete.')
+    }
+    idInput.value = block.dataset.id;
+    // Hide the block
+    block.className += ' hidden';
+    submitFormAjax(deleteForm, {
+      success: function(response) {
+        // Delete the block
+        block.parentNode.removeChild(block);
+      },
+      error: function(response) {
+        // Show the block again
+        block.className = block.className.replace('hidden', '');
+      }
+    });
+  }
+
+  registerDeleteImageButton = function(button) {
+    button.addEventListener('click', function(event) {
+      deleteBlock(event, deleteImageId, deleteImageForm);
+    });
+  }
+
+  registerDeleteColorButton = function(button) {
+    button.addEventListener('click', function(event) {
+      deleteBlock(event, deleteColorId, deleteColorForm);
+    });
+  }
+
+  var deleteImageButtons = document.getElementsByClassName('delete-image');
+  for (var i = 0; i < deleteImageButtons.length; i++) {
+    registerDeleteImageButton(deleteImageButtons[i]);
+  }
+
+  var deleteColorButtons = document.getElementsByClassName('delete-color');
+  for (var i = 0; i < deleteColorButtons.length; i++) {
+    registerDeleteColorButton(deleteColorButtons[i]);
   }
 
 });
