@@ -15,7 +15,7 @@ var minifyCss = require('gulp-minify-css');
 var scsslint = require('gulp-scss-lint');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
-var exec = require('child_process').exec;
+var spawn = require('child_process').spawn;
 
 gulp.task('sass:lint', function() {
   gulp.src('./app/static/src/sass/*.scss')
@@ -33,7 +33,8 @@ gulp.task('sass:build', function() {
     }))
     .pipe(autoprefixer())
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./app/static/dist/css/'));
+    .pipe(gulp.dest('./app/static/dist/css/'))
+    .pipe(reload({stream: true}));
 });
 
 gulp.task('sass:optimized', function() {
@@ -54,7 +55,8 @@ gulp.task('js:build', function() {
   gulp.src(['./app/static/src/js/**/*.js'])
     .pipe(plumber())
     .pipe(uglify())
-    .pipe(gulp.dest('app/static/dist/js'));
+    .pipe(gulp.dest('app/static/dist/js'))
+    .pipe(reload({stream: true}));
 });
 
 gulp.task('js:lint', function() {
@@ -70,43 +72,42 @@ gulp.task('js', ['js:lint', 'js:build']);
 gulp.task('images', function() {
   gulp.src('./app/static/src/img/**/*')
     .pipe(plumber())
-    .pipe(gulp.dest('./app/static/dist/img'));
-
-  // gulp.src('src/favicon.ico')
-  //   .pipe(plumber())
-  //   .pipe(gulp.dest('./dist/'));
+    .pipe(gulp.dest('./app/static/dist/img'))
+    .pipe(reload({stream: true}));
 });
 
 gulp.task('fonts', function() {
   gulp.src('./app/static/src/font/*')
     .pipe(plumber())
-    .pipe(gulp.dest('./app/static/dist/font'));
+    .pipe(gulp.dest('./app/static/dist/font'))
+    .pipe(reload({stream: true}));
 });
 
 gulp.task('run', function() {
-  var proc = exec('./config/runserver.sh');
+  spawn('./config/runserver.sh', [], {stdio: 'inherit'});
 });
 
 gulp.task('watch', function() {
-  gulp.watch('./app/templates/**/*.html', reload);
-  gulp.watch('./app/static/src/sass/**/*.scss', ['sass'], reload);
-  gulp.watch('./app/static/src/img/**/*', ['images'], reload);
-  gulp.watch(['./app/static/src/js/**/*.js', 'Gulpfile.js'], ['js'], reload);
+  gulp.watch('./app/static/src/sass/**/*.scss', ['sass']);
+  gulp.watch('./app/static/src/img/**/*', ['images']);
+  gulp.watch('./app/static/src/font/**/*', ['fonts']);
+  gulp.watch(['./app/static/src/js/**/*.js', 'Gulpfile.js'], ['js']);
 });
 
 gulp.task('build', ['sass', 'images', 'fonts', 'js']);
 gulp.task('build:optimized', ['sass:optimized', 'images', 'fonts', 'js']);
 
-// use default task to launch Browsersync and watch JS files
-gulp.task('serve', ['build', 'run'], function() {
+gulp.task('serve', ['run', 'build'], function() {
 
-  // Serve files from the root of this project
+  // Proxy over to the Flask app
   browserSync.init({
-    notify: false,
-    proxy: '127.0.0.1:5000',
+    proxy: 'localhost:5000',
+    files: ['./app/templates/**/*'],
   });
 
   // add browserSync.reload to the tasks array to make
   // all browsers reload after tasks are complete.
   gulp.start(['watch']);
 });
+
+gulp.task('default', ['build']);

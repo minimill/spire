@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var dropzone = document.getElementById('dropzone');
 
   var showOverlay = false;
-  var dragTimeout = -1;
+  var dragTimeout = -2;
   var i;
   var boardInputs = boardForm.getElementsByTagName('input');
   var autoSaveTimeoutId;

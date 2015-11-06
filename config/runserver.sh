@@ -1,4 +1,4 @@
-virtualenv .
+virtualenv --quiet .
 source bin/activate
-pip install -r config/requirements.txt
+pip install --quiet -r config/requirements.txt
 python run.py debug
